@@ -5,6 +5,7 @@ function createErrorMessage(issue: z.ZodIssue, index: number) {
   const errorMessage = document.getElementById("errorMessage")!;
   const errorCard = document.createElement("div");
   errorCard.className = "error-card";
+
   const title = document.createElement("h4");
   const titleTextNode = document.createTextNode(`ERROR #${index + 1}`);
   title.appendChild(titleTextNode);
@@ -20,6 +21,24 @@ function createErrorMessage(issue: z.ZodIssue, index: number) {
   errorMessage.appendChild(errorCard);
 }
 
+function createGenericErrorMessage() {
+  const errorMessage = document.getElementById("errorMessage")!;
+  const errorCard = document.createElement("div");
+  errorCard.className = "error-card";
+
+  const title = document.createElement("h4");
+  const titleTextNode = document.createTextNode(`ERROR`);
+  title.appendChild(titleTextNode);
+  errorCard.appendChild(title);
+
+  const paragraph = document.createElement("p");
+  const paragraphTextNode = document.createTextNode(`Something went wrong`);
+  paragraph.appendChild(paragraphTextNode);
+  errorCard.appendChild(paragraph);
+
+  errorMessage.appendChild(errorCard);
+}
+
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
     const i = document.getElementById("resourceInput") as HTMLInputElement;
@@ -29,8 +48,10 @@ export function validator(element: HTMLButtonElement) {
     } catch (error: unknown) {
       if (error instanceof z.ZodError) {
         error.issues.forEach((i, index) => createErrorMessage(i, index));
+        console.log(error);
       } else {
-        console.log(JSON.stringify(error));
+        createGenericErrorMessage();
+        console.log(error);
       }
     }
   });
