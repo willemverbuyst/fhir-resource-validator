@@ -10,9 +10,14 @@
     <div class="container">
       <h1>FHIR Resource Validator</h1>
       <label for="resourceInput">Add resource:</label>
-      <textarea id="resourceInput" placeholder="Enter Text..."></textarea>
+      <textarea
+        id="resourceInput"
+        placeholder="Enter Text..."
+        rows="40"
+      ></textarea>
 
       <button id="validateBtn" type="button">Validate</button>
+      <div id="errorMessage" class="error"></div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

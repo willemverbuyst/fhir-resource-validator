@@ -33,3 +33,7 @@ textarea {
   min-width: 320px;
   flex-direction: column;
 }
+
+.error {
+  color: red;
+}
