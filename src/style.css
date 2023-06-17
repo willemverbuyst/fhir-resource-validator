@@ -37,3 +37,8 @@ textarea {
 .error {
   color: red;
 }
+
+.error-card {
+  padding: 1rem;
+  border: 1px solid red;
+}
