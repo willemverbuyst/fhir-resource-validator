@@ -91,7 +91,10 @@ function displayError(
 
 function createErrorMessage(issue: z.ZodIssue, index: number) {
   const errorCard = createErrorCard(`ERROR #${index + 1}`);
-  const paragraph = createErrorParagraph(`${issue.path}: ${issue.message}`);
+  const message = issue.path.length
+    ? `${issue.path}: ${issue.message}`
+    : issue.message;
+  const paragraph = createErrorParagraph(message);
 
   displayError(errorCard, paragraph);
 }

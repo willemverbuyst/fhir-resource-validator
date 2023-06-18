@@ -76,7 +76,8 @@ label {
 }
 
 .error-card {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.2rem;
   border: 2px solid var(--color-error);
 }
 

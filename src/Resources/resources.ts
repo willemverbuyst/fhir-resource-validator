@@ -5,6 +5,7 @@ import { Flag } from "./Flag";
 export const Resources = {
   Encounter: "Encounter",
   Flag: "Flag",
+  Patient: "Patient",
 } as const;
 
 export type ResourceType = keyof typeof Resources;
