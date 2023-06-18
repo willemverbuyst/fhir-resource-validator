@@ -1,4 +1,4 @@
+import { validator } from "./Logic/validator";
 import "./style.css";
-import { validator } from "./validator";
 
 validator(document.querySelector("#validateBtn") as HTMLButtonElement);

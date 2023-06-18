@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { Encounter } from "./Resources/Encounter";
-import { Flag } from "./Resources/Flag";
+import { Encounter } from "../Resources/Encounter";
+import { Flag } from "../Resources/Flag";
 import {
   findResourceType,
   Resources,
   ResourceType,
-} from "./Resources/resources";
+} from "../Resources/resources";
 
 export function cleanUpSuccessDisplay() {
   const successMessage = document.getElementById("successMessage");

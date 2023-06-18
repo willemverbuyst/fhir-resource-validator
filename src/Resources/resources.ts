@@ -1,4 +1,4 @@
-import { hasResourceTypeKey, isObject } from "../utils";
+import { hasResourceTypeKey, isObject } from "../Logic/utils";
 import { Encounter } from "./Encounter";
 import { Flag } from "./Flag";
 

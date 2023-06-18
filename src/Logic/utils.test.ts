@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Resources } from "./Resources/resources";
+import { Resources } from "../Resources/resources";
 import { hasResourceTypeKey, isObject } from "./utils";
 
 describe("isObject", () => {
