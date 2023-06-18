@@ -29,13 +29,18 @@ describe("cleanUpSuccessDisplay", () => {
   it("should remove all child elements from the success message element", () => {
     cleanUpSuccessDisplay();
 
-    const successMessageElement = document.getElementById("successMessage")!;
+    const successMessageElement = document.getElementById(
+      "successMessage"
+    ) as HTMLDivElement;
 
     expect(successMessageElement.childElementCount).toBe(0);
   });
 
   it("should handle the case when no success message element is found", () => {
-    const successMessageElement = document.getElementById("successMessage")!;
+    const successMessageElement = document.getElementById(
+      "successMessage"
+    ) as HTMLDivElement;
+
     successMessageElement.remove();
 
     const consoleErrorSpy = vi.spyOn(global.console, "warn");
