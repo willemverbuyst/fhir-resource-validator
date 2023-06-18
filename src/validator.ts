@@ -7,7 +7,7 @@ import {
   ResourceType,
 } from "./Resources/resources";
 
-function cleanUpSuccessDisplay() {
+export function cleanUpSuccessDisplay() {
   const successMessage = document.getElementById("successMessage");
 
   if (!(successMessage && successMessage instanceof HTMLDivElement)) {
