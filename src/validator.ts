@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { Flag } from "./Flag";
+import { Encounter } from "./Resources/Encounter";
+import { Flag } from "./Resources/Flag";
+import {
+  findResourceType,
+  Resources,
+  ResourceType,
+} from "./Resources/resources";
 
 function cleanUpSuccessDisplay() {
   const successMessage = document.getElementById("successMessage");
@@ -120,6 +126,20 @@ function parseJSONInput() {
   }
 }
 
+function parseWithZod(value: unknown, resourceType: ResourceType) {
+  switch (resourceType) {
+    case Resources.Encounter:
+      Encounter.parse(value);
+      break;
+    case Resources.Flag:
+      Flag.parse(value);
+      break;
+
+    default:
+      throw new Error("Unknown resource type, no validition took place");
+  }
+}
+
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
     const value = parseJSONInput();
@@ -130,7 +150,9 @@ export function validator(element: HTMLButtonElement) {
     }
 
     try {
-      Flag.parse(value);
+      const resourceType = findResourceType(value);
+
+      parseWithZod(value, resourceType);
       cleanUpDisplay();
       displaySuccess();
       console.info("✅ Parsed input with zod");
@@ -139,11 +161,19 @@ export function validator(element: HTMLButtonElement) {
         cleanUpDisplay();
         error.issues.forEach((i, index) => createErrorMessage(i, index));
         console.error(error);
-      } else {
-        cleanUpDisplay();
-        createGenericErrorMessage();
-        console.error(error);
+        return;
       }
+
+      if (error instanceof Error) {
+        cleanUpDisplay();
+        createGenericErrorMessage(error.message);
+        console.error(error.message);
+        return;
+      }
+
+      cleanUpDisplay();
+      createGenericErrorMessage();
+      console.error(error);
     }
   });
 }
