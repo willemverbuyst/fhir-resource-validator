@@ -1,6 +1,38 @@
 import { z } from "zod";
 import { Flag } from "./Flag";
 
+function cleanUpSuccessDisplay() {
+  const successMessage = document.getElementById("successMessage");
+
+  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
+    console.warn("No success message element found");
+    return;
+  }
+
+  let child = successMessage.lastElementChild;
+  while (child) {
+    successMessage.removeChild(child);
+    child = successMessage.lastElementChild;
+  }
+}
+
+function displaySuccess() {
+  const successMessage = document.getElementById("successMessage");
+
+  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
+    console.warn("No success message element found");
+    return;
+  }
+
+  const successCard = document.createElement("div");
+  const title = document.createElement("h4");
+  const titleTextNode = document.createTextNode("Looking good!");
+  title.appendChild(titleTextNode);
+  successCard.appendChild(title);
+
+  successMessage.appendChild(successCard);
+}
+
 function createErrorCard(text = "ERROR") {
   const errorCard = document.createElement("div");
   errorCard.className = "error-card";
@@ -65,6 +97,11 @@ function createGenericErrorMessage(text = "Something went wrong") {
   displayError(errorCard, paragraph);
 }
 
+function cleanUpDisplay() {
+  cleanUpErrorDisplay();
+  cleanUpSuccessDisplay();
+}
+
 function parseJSONInput() {
   const input = document.getElementById("resourceInput");
 
@@ -77,7 +114,7 @@ function parseJSONInput() {
     const value = JSON.parse(input.value.trim());
     return value;
   } catch (error) {
-    cleanUpErrorDisplay();
+    cleanUpDisplay();
     createGenericErrorMessage("Not valid JSON");
     console.error(error);
   }
@@ -94,14 +131,16 @@ export function validator(element: HTMLButtonElement) {
 
     try {
       Flag.parse(value);
+      cleanUpDisplay();
+      displaySuccess();
       console.info("✅ Parsed input with zod");
     } catch (error: unknown) {
       if (error instanceof z.ZodError) {
-        cleanUpErrorDisplay();
+        cleanUpDisplay();
         error.issues.forEach((i, index) => createErrorMessage(i, index));
         console.error(error);
       } else {
-        cleanUpErrorDisplay();
+        cleanUpDisplay();
         createGenericErrorMessage();
         console.error(error);
       }
