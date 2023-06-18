@@ -1,57 +1,109 @@
 import { z } from "zod";
 import { Flag } from "./Flag";
 
-function createErrorMessage(issue: z.ZodIssue, index: number) {
-  const errorMessage = document.getElementById("errorMessage")!;
+function createErrorCard(text = "ERROR") {
   const errorCard = document.createElement("div");
   errorCard.className = "error-card";
 
   const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode(`ERROR #${index + 1}`);
+  const titleTextNode = document.createTextNode(text);
   title.appendChild(titleTextNode);
   errorCard.appendChild(title);
 
-  const paragraph = document.createElement("p");
-  const paragraphTextNode = document.createTextNode(
-    `${issue.path}: ${issue.message.toLowerCase()}`
-  );
-  paragraph.appendChild(paragraphTextNode);
-  errorCard.appendChild(paragraph);
+  return errorCard;
+}
 
+function createErrorParagraph(text: string) {
+  const paragraph = document.createElement("p");
+  const paragraphTextNode = document.createTextNode(text);
+  paragraph.appendChild(paragraphTextNode);
+
+  return paragraph;
+}
+
+function cleanUpErrorDisplay() {
+  const errorMessage = document.getElementById("errorMessage");
+
+  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
+    console.warn("No error message element found");
+    return;
+  }
+
+  let child = errorMessage.lastElementChild;
+  while (child) {
+    errorMessage.removeChild(child);
+    child = errorMessage.lastElementChild;
+  }
+}
+
+function displayError(
+  errorCard: HTMLDivElement,
+  paragraph: HTMLParagraphElement
+) {
+  const errorMessage = document.getElementById("errorMessage");
+
+  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
+    console.warn("No error message element found");
+    return;
+  }
+
+  errorCard.appendChild(paragraph);
   errorMessage.appendChild(errorCard);
 }
 
-function createGenericErrorMessage() {
-  const errorMessage = document.getElementById("errorMessage")!;
-  const errorCard = document.createElement("div");
-  errorCard.className = "error-card";
+function createErrorMessage(issue: z.ZodIssue, index: number) {
+  const errorCard = createErrorCard(`ERROR #${index + 1}`);
+  const paragraph = createErrorParagraph(`${issue.path}: ${issue.message}`);
 
-  const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode(`ERROR`);
-  title.appendChild(titleTextNode);
-  errorCard.appendChild(title);
+  displayError(errorCard, paragraph);
+}
 
-  const paragraph = document.createElement("p");
-  const paragraphTextNode = document.createTextNode(`Something went wrong`);
-  paragraph.appendChild(paragraphTextNode);
-  errorCard.appendChild(paragraph);
+function createGenericErrorMessage(text = "Something went wrong") {
+  const errorCard = createErrorCard();
+  const paragraph = createErrorParagraph(text);
 
-  errorMessage.appendChild(errorCard);
+  displayError(errorCard, paragraph);
+}
+
+function parseJSONInput() {
+  const input = document.getElementById("resourceInput");
+
+  if (!(input && input instanceof HTMLTextAreaElement && input.value)) {
+    console.warn("No input element found");
+    return;
+  }
+
+  try {
+    const value = JSON.parse(input.value.trim());
+    return value;
+  } catch (error) {
+    cleanUpErrorDisplay();
+    createGenericErrorMessage("Not valid JSON");
+    console.error(error);
+  }
 }
 
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
-    const i = document.getElementById("resourceInput") as HTMLInputElement;
-    const value = JSON.parse(i.value.trim());
+    const value = parseJSONInput();
+
+    if (!value) {
+      console.warn("No input to validate");
+      return;
+    }
+
     try {
       Flag.parse(value);
+      console.info("✅ Parsed input with zod");
     } catch (error: unknown) {
       if (error instanceof z.ZodError) {
+        cleanUpErrorDisplay();
         error.issues.forEach((i, index) => createErrorMessage(i, index));
-        console.log(error);
+        console.error(error);
       } else {
+        cleanUpErrorDisplay();
         createGenericErrorMessage();
-        console.log(error);
+        console.error(error);
       }
     }
   });
