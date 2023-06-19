@@ -6,6 +6,7 @@ export const Resources = {
   Encounter: "Encounter",
   Flag: "Flag",
   Patient: "Patient",
+  Practitioner: "Practitioner",
 } as const;
 
 export type ResourceType = keyof typeof Resources;
