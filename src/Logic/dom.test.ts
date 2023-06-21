@@ -85,7 +85,7 @@ describe("displaySuccess", () => {
 
     const consoleWarnSpy = vi.spyOn(global.console, "warn");
 
-    cleanUpSuccessDisplay();
+    displaySuccess();
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       "No success message element found"
@@ -298,6 +298,30 @@ describe("createErrorMessage", () => {
     const appendedParagraph = appendedErrorCard?.querySelector("p");
     expect(appendedParagraph).not.toBeNull();
     expect(appendedParagraph?.textContent).toBe("status: Required");
+  });
+
+  it("should create an error message with the correct error card and paragraph even if path is missing in issue", () => {
+    const issue = {
+      expected: "'active' | 'inactive' | 'entered-in-error'",
+      received: ZodParsedType.undefined,
+      code: ZodIssueCode.invalid_literal,
+      path: [],
+      message: "Error message",
+    };
+    const index = 0;
+
+    createErrorMessage(issue, index);
+
+    const errorMessage = document.getElementById("errorMessage");
+    expect(errorMessage).toBeInstanceOf(HTMLDivElement);
+    expect(errorMessage?.childElementCount).toBe(1);
+
+    const appendedErrorCard = errorMessage?.querySelector(".error-card");
+    expect(appendedErrorCard).not.toBeNull();
+
+    const appendedParagraph = appendedErrorCard?.querySelector("p");
+    expect(appendedParagraph).not.toBeNull();
+    expect(appendedParagraph?.textContent).toBe("Error message");
   });
 });
 

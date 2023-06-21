@@ -1,54 +1,76 @@
-/**
- * @vitest-environment jsdom
- */
-
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanUpSuccessDisplay } from "./validator";
+import * as exports from "./dom";
+import { cleanUpDisplay, parseJSONInput } from "./validator";
 
-describe("cleanUpSuccessDisplay", () => {
+describe("cleanUpDisplay", () => {
+  it("should clean up error and success displays", () => {
+    const cleanUpErrorDisplayMock = vi.spyOn(exports, "cleanUpErrorDisplay");
+    const cleanUpSuccessDisplayMock = vi.spyOn(
+      exports,
+      "cleanUpSuccessDisplay"
+    );
+
+    cleanUpDisplay();
+
+    expect(cleanUpErrorDisplayMock).toHaveBeenCalled();
+    expect(cleanUpSuccessDisplayMock).toHaveBeenCalled();
+  });
+});
+
+describe("parseJSONInput", () => {
   beforeEach(() => {
-    const successMessageElement = document.createElement("div");
-    successMessageElement.id = "successMessage";
+    const textareaElement = document.createElement("textarea");
+    textareaElement.id = "resourceInput";
+    // extra white space in string, to test trim
+    textareaElement.value = '{ "name": "John", "age": 30 } ';
 
-    const child1 = document.createElement("p");
-    const child2 = document.createElement("p");
-    successMessageElement.appendChild(child1);
-    successMessageElement.appendChild(child2);
-
-    document.body.appendChild(successMessageElement);
+    document.body.appendChild(textareaElement);
   });
 
   afterEach(() => {
-    const successMessageElement = document.getElementById("successMessage");
+    const textareaElement = document.getElementById("resourceInput");
 
-    if (successMessageElement) {
-      successMessageElement.remove();
+    if (textareaElement) {
+      textareaElement.remove();
     }
   });
+  it("should return the parsed JSON value when valid JSON is provided", () => {
+    const result = parseJSONInput();
 
-  it("should remove all child elements from the success message element", () => {
-    cleanUpSuccessDisplay();
-
-    const successMessageElement = document.getElementById(
-      "successMessage"
-    ) as HTMLDivElement;
-
-    expect(successMessageElement.childElementCount).toBe(0);
+    expect(result).toEqual({ name: "John", age: 30 });
   });
 
-  it("should handle the case when no success message element is found", () => {
-    const successMessageElement = document.getElementById(
-      "successMessage"
-    ) as HTMLDivElement;
+  it("should log an error and display a generic error message when invalid JSON is provided", () => {
+    const textareaElement = document.getElementById(
+      "resourceInput"
+    ) as HTMLTextAreaElement;
+    textareaElement.value = "just a random string";
 
-    successMessageElement.remove();
-
-    const consoleErrorSpy = vi.spyOn(global.console, "warn");
-
-    cleanUpSuccessDisplay();
-
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "No success message element found"
+    const createGenericErrorMessageyMock = vi.spyOn(
+      exports,
+      "createGenericErrorMessage"
     );
+
+    parseJSONInput();
+
+    expect(createGenericErrorMessageyMock).toHaveBeenCalledWith(
+      "Not valid JSON"
+    );
+  });
+
+  it("should return null and log a warning when no input element is found", () => {
+    const textareaElement = document.getElementById(
+      "resourceInput"
+    ) as HTMLTextAreaElement;
+    textareaElement.remove();
+
+    const consoleWarnSpy = vi.spyOn(console, "warn");
+
+    const result = parseJSONInput();
+
+    expect(result).toBeNull();
+    expect(consoleWarnSpy).toHaveBeenCalledWith("No input element found");
+
+    consoleWarnSpy.mockRestore();
   });
 });

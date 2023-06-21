@@ -6,117 +6,25 @@ import {
   Resources,
   ResourceType,
 } from "../Resources/resources";
+import {
+  cleanUpErrorDisplay,
+  cleanUpSuccessDisplay,
+  createErrorMessage,
+  createGenericErrorMessage,
+  displaySuccess,
+} from "./dom";
 
-export function cleanUpSuccessDisplay() {
-  const successMessage = document.getElementById("successMessage");
-
-  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
-    console.warn("No success message element found");
-    return;
-  }
-
-  let child = successMessage.lastElementChild;
-  while (child) {
-    successMessage.removeChild(child);
-    child = successMessage.lastElementChild;
-  }
-}
-
-function displaySuccess() {
-  const successMessage = document.getElementById("successMessage");
-
-  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
-    console.warn("No success message element found");
-    return;
-  }
-
-  const successCard = document.createElement("div");
-  const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode("Looking good!");
-  title.appendChild(titleTextNode);
-  successCard.appendChild(title);
-
-  successMessage.appendChild(successCard);
-}
-
-function createErrorCard(text = "ERROR") {
-  const errorCard = document.createElement("div");
-  errorCard.className = "error-card";
-
-  const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode(text);
-  title.appendChild(titleTextNode);
-  errorCard.appendChild(title);
-
-  return errorCard;
-}
-
-function createErrorParagraph(text: string) {
-  const paragraph = document.createElement("p");
-  const paragraphTextNode = document.createTextNode(text);
-  paragraph.appendChild(paragraphTextNode);
-
-  return paragraph;
-}
-
-function cleanUpErrorDisplay() {
-  const errorMessage = document.getElementById("errorMessage");
-
-  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
-    console.warn("No error message element found");
-    return;
-  }
-
-  let child = errorMessage.lastElementChild;
-  while (child) {
-    errorMessage.removeChild(child);
-    child = errorMessage.lastElementChild;
-  }
-}
-
-function displayError(
-  errorCard: HTMLDivElement,
-  paragraph: HTMLParagraphElement
-) {
-  const errorMessage = document.getElementById("errorMessage");
-
-  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
-    console.warn("No error message element found");
-    return;
-  }
-
-  errorCard.appendChild(paragraph);
-  errorMessage.appendChild(errorCard);
-}
-
-function createErrorMessage(issue: z.ZodIssue, index: number) {
-  const errorCard = createErrorCard(`ERROR #${index + 1}`);
-  const message = issue.path.length
-    ? `${issue.path}: ${issue.message}`
-    : issue.message;
-  const paragraph = createErrorParagraph(message);
-
-  displayError(errorCard, paragraph);
-}
-
-function createGenericErrorMessage(text = "Something went wrong") {
-  const errorCard = createErrorCard();
-  const paragraph = createErrorParagraph(text);
-
-  displayError(errorCard, paragraph);
-}
-
-function cleanUpDisplay() {
+export function cleanUpDisplay() {
   cleanUpErrorDisplay();
   cleanUpSuccessDisplay();
 }
 
-function parseJSONInput() {
+export function parseJSONInput() {
   const input = document.getElementById("resourceInput");
 
   if (!(input && input instanceof HTMLTextAreaElement && input.value)) {
     console.warn("No input element found");
-    return;
+    return null;
   }
 
   try {
@@ -129,7 +37,7 @@ function parseJSONInput() {
   }
 }
 
-function parseWithZod(value: unknown, resourceType: ResourceType) {
+export function parseWithZod(value: unknown, resourceType: ResourceType) {
   switch (resourceType) {
     case Resources.Encounter:
       Encounter.parse(value);
