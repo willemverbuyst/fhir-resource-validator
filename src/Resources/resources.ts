@@ -1,7 +1,3 @@
-import { hasResourceTypeKey, isObject } from "../Logic/utils";
-import { Encounter } from "./Encounter";
-import { Flag } from "./Flag";
-
 export const Resources = {
   Encounter: "Encounter",
   Flag: "Flag",
@@ -11,15 +7,25 @@ export const Resources = {
 
 export type ResourceType = keyof typeof Resources;
 
-export function findResourceType(value: Flag | Encounter) {
-  isObject(value);
-  hasResourceTypeKey(value);
-
-  const resourceType = Resources[value.resourceType];
-
-  if (!resourceType) {
-    throw new Error("Unknown resource type");
+export function getResourceType(value: unknown) {
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    "resourceType" in value &&
+    typeof value.resourceType === "string"
+  ) {
+    return (value as { resourceType: string }).resourceType;
   }
 
-  return resourceType;
+  return null;
+}
+
+export function findResourceType(value: unknown) {
+  const resourceType = getResourceType(value);
+
+  if (resourceType && resourceType in Resources) {
+    return Resources[resourceType as ResourceType];
+  }
+
+  throw new Error("Unknown resource type");
 }
