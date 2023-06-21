@@ -9,7 +9,8 @@
     "format:check": "prettier --check src",
     "lint": "eslint src --ext .ts",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest --silent",
+    "test:coverage": "vitest --silent run --coverage",
     "type:check": "tsc"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@vitest/coverage-v8": "^0.32.2",
     "git-commit-msg-linter": "^5.0.4",
     "happy-dom": "^9.20.3",
     "prettier": "^2.8.8",
