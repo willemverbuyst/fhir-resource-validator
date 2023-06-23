@@ -1,55 +1,11 @@
 import { z } from "zod";
-import { Encounter } from "../Resources/Encounter";
-import { Flag } from "../Resources/Flag";
+import { findResourceType } from "../Resources/resources";
 import {
-  findResourceType,
-  Resources,
-  ResourceType,
-} from "../Resources/resources";
-import {
-  cleanUpErrorDisplay,
-  cleanUpSuccessDisplay,
   createErrorMessage,
   createGenericErrorMessage,
   displaySuccess,
 } from "./dom";
-
-export function cleanUpDisplay() {
-  cleanUpErrorDisplay();
-  cleanUpSuccessDisplay();
-}
-
-export function parseJSONInput() {
-  const input = document.getElementById("resourceInput");
-
-  if (!(input && input instanceof HTMLTextAreaElement && input.value)) {
-    console.warn("No input element found");
-    return null;
-  }
-
-  try {
-    const value = JSON.parse(input.value.trim());
-    return value;
-  } catch (error) {
-    cleanUpDisplay();
-    createGenericErrorMessage("Not valid JSON");
-    console.error(error);
-  }
-}
-
-export function parseWithZod(value: unknown, resourceType: ResourceType) {
-  switch (resourceType) {
-    case Resources.Encounter:
-      Encounter.parse(value);
-      break;
-    case Resources.Flag:
-      Flag.parse(value);
-      break;
-
-    default:
-      throw new Error("Unknown resource type, no validition took place");
-  }
-}
+import { cleanUpDisplay, parseJSONInput, parseWithZod } from "./parse";
 
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
