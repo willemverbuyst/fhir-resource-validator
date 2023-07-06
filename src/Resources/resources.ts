@@ -1,8 +1,15 @@
 export const Resources = {
+  Consent: "Consent",
+  Contract: "Contract",
+  DocumentReference: "DocumentReference",
   Encounter: "Encounter",
   Flag: "Flag",
   Patient: "Patient",
   Practitioner: "Practitioner",
+  PractitionerRole: "PractitionerRole",
+  QuestionnaireResponse: "QuestionnaireResponse",
+  Organization: "Organization",
+  RelatedPerson: "RelatedPerson",
 } as const;
 
 export type ResourceType = keyof typeof Resources;

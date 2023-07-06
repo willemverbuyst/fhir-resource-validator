@@ -1,3 +1,4 @@
+import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
 import { Resources, ResourceType } from "../Resources/resources";
@@ -32,6 +33,9 @@ export function parseJSONInput() {
 
 export function parseWithZod(value: unknown, resourceType: ResourceType) {
   switch (resourceType) {
+    case Resources.Consent:
+      Consent.parse(value);
+      break;
     case Resources.Encounter:
       Encounter.parse(value);
       break;
