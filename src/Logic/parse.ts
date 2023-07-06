@@ -1,6 +1,7 @@
 import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
+import { Patient } from "../Resources/Patient";
 import { Resources, ResourceType } from "../Resources/resources";
 import {
   cleanUpErrorDisplay,
@@ -41,6 +42,9 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
       break;
     case Resources.Flag:
       Flag.parse(value);
+      break;
+    case Resources.Patient:
+      Patient.parse(value);
       break;
   }
 }
