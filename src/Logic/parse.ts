@@ -3,16 +3,7 @@ import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
 import { Patient } from "../Resources/Patient";
 import { Resources, ResourceType } from "../Resources/resources";
-import {
-  cleanUpErrorDisplay,
-  cleanUpSuccessDisplay,
-  createGenericErrorMessage,
-} from "./dom";
-
-export function cleanUpDisplay() {
-  cleanUpErrorDisplay();
-  cleanUpSuccessDisplay();
-}
+import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
 
 export function parseJSONInput() {
   const input = document.getElementById("resourceInput");

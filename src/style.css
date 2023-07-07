@@ -15,6 +15,7 @@
   --color-text: #747e7e;
   --color-white: #f5f5f5;
   --color-black: #242424;
+  --color-warning: #f99d52;
 }
 
 body {
@@ -71,16 +72,23 @@ label {
   text-transform: uppercase;
 }
 
-.error {
-  color: var(--color-error);
-}
-
 .error-card {
   padding: 0.5rem 1rem;
   margin-bottom: 0.2rem;
   border: 2px solid var(--color-error);
+  color: var(--color-error);
 }
 
-.success {
+.success-card {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.2rem;
+  border: 2px solid var(--color-dark);
   color: var(--color-dark);
+}
+
+.warning-card {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.2rem;
+  border: 2px solid var(--color-warning);
+  color: var(--color-warning);
 }
