@@ -25,7 +25,7 @@ export const Patient = DomainResource.extend({
   maritalStatus: CodeableConcept.optional(),
   multipleBirthBoolean: z.boolean().optional(),
   multipleBirthInteger: z.number().int().optional(),
-  photo: Attachment.optional(),
+  photo: z.array(Attachment).optional(),
   contact: z
     .array(
       z.object({

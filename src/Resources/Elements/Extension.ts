@@ -1,8 +1,14 @@
 import { z } from "zod";
 
-export const Extension = z
-  .object({
-    uri: z.string().optional(),
-    value: z.array(z.unknown()).optional(),
-  })
-  .strict();
+const baseExtension = z.object({
+  url: z.string().optional(),
+});
+
+type Extension = z.infer<typeof baseExtension> & {
+  extension?: Extension[];
+};
+
+export const Extension: z.ZodType<Extension> = baseExtension.extend({
+  extension: z.lazy(() => Extension.array()).optional(),
+  value: z.unknown().optional(),
+});
