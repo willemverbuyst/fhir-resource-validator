@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { findResourceType } from "../Resources/resources";
 import {
+  cleanUpDisplay,
   createErrorMessage,
   createGenericErrorMessage,
-  displaySuccess,
+  createSuccessMessage,
 } from "./dom";
-import { cleanUpDisplay, parseJSONInput, parseWithZod } from "./parse";
+import { parseJSONInput, parseWithZod } from "./parse";
 
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
@@ -21,7 +22,7 @@ export function validator(element: HTMLButtonElement) {
 
       parseWithZod(value, resourceType);
       cleanUpDisplay();
-      displaySuccess();
+      createSuccessMessage();
       console.info("✅ Parsed input with zod");
     } catch (error: unknown) {
       if (error instanceof z.ZodError) {

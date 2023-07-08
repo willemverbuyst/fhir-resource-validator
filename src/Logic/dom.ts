@@ -1,50 +1,29 @@
 import { z } from "zod";
 
-export function cleanUpSuccessDisplay() {
-  const successMessage = document.getElementById("successMessage");
-
-  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
-    console.warn("No success message element found");
-    return;
-  }
-
-  let child = successMessage.lastElementChild;
-  while (child) {
-    successMessage.removeChild(child);
-    child = successMessage.lastElementChild;
-  }
-}
-
-export function displaySuccess() {
-  const successMessage = document.getElementById("successMessage");
-
-  if (!(successMessage && successMessage instanceof HTMLDivElement)) {
-    console.warn("No success message element found");
-    return;
-  }
-
-  const successCard = document.createElement("div");
-  const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode("Looking good!");
-  title.appendChild(titleTextNode);
-  successCard.appendChild(title);
-
-  successMessage.appendChild(successCard);
-}
-
-export function createErrorCard(text = "ERROR") {
-  const errorCard = document.createElement("div");
-  errorCard.className = "error-card";
+export function createCard(
+  type: "ERROR" | "SUCCESS" | "WARNING",
+  text?: string
+) {
+  const card = document.createElement("div");
+  card.className =
+    type === "ERROR"
+      ? "error-card"
+      : type === "WARNING"
+      ? "warning-card"
+      : "success-card";
 
   const title = document.createElement("h4");
-  const titleTextNode = document.createTextNode(text);
-  title.appendChild(titleTextNode);
-  errorCard.appendChild(title);
 
-  return errorCard;
+  if (text) {
+    const titleTextNode = document.createTextNode(text);
+    title.appendChild(titleTextNode);
+    card.appendChild(title);
+  }
+
+  return card;
 }
 
-export function createErrorParagraph(text: string) {
+export function createParagraph(text: string) {
   const paragraph = document.createElement("p");
   const paragraphTextNode = document.createTextNode(text);
   paragraph.appendChild(paragraphTextNode);
@@ -52,49 +31,59 @@ export function createErrorParagraph(text: string) {
   return paragraph;
 }
 
-export function cleanUpErrorDisplay() {
-  const errorMessage = document.getElementById("errorMessage");
+export function cleanUpDisplay() {
+  const message = document.getElementById("message");
 
-  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
-    console.warn("No error message element found");
+  if (!(message && message instanceof HTMLDivElement)) {
+    console.warn("No message element found");
     return;
   }
 
-  let child = errorMessage.lastElementChild;
+  let child = message.lastElementChild;
   while (child) {
-    errorMessage.removeChild(child);
-    child = errorMessage.lastElementChild;
+    message.removeChild(child);
+    child = message.lastElementChild;
   }
 }
 
-export function displayError(
-  errorCard: HTMLDivElement,
-  paragraph: HTMLParagraphElement
+export function displayMessage(
+  card: HTMLDivElement,
+  paragraph?: HTMLParagraphElement
 ) {
-  const errorMessage = document.getElementById("errorMessage");
+  const message = document.getElementById("message");
 
-  if (!(errorMessage && errorMessage instanceof HTMLDivElement)) {
-    console.warn("No error message element found");
+  if (!(message && message instanceof HTMLDivElement)) {
+    console.warn("No message element found");
     return;
   }
 
-  errorCard.appendChild(paragraph);
-  errorMessage.appendChild(errorCard);
+  if (paragraph) {
+    card.appendChild(paragraph);
+  }
+
+  message.appendChild(card);
 }
 
 export function createErrorMessage(issue: z.ZodIssue, index: number) {
-  const errorCard = createErrorCard(`ERROR #${index + 1}`);
+  const messageType =
+    "keys" in issue && String(issue.keys).startsWith("_") ? "WARNING" : "ERROR";
+  const card = createCard(messageType, `${messageType} #${index + 1}`);
   const message = issue.path.length
     ? `${issue.path}: ${issue.message}`
     : issue.message;
-  const paragraph = createErrorParagraph(message);
+  const paragraph = createParagraph(message);
 
-  displayError(errorCard, paragraph);
+  displayMessage(card, paragraph);
 }
 
 export function createGenericErrorMessage(text = "Something went wrong") {
-  const errorCard = createErrorCard();
-  const paragraph = createErrorParagraph(text);
+  const card = createCard("ERROR", text);
 
-  displayError(errorCard, paragraph);
+  displayMessage(card);
+}
+
+export function createSuccessMessage() {
+  const card = createCard("SUCCESS", "Looking good!");
+
+  displayMessage(card);
 }

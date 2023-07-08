@@ -32,8 +32,8 @@ describe("validator", () => {
     const parseWithZodMock = vi
       .spyOn(parseExports, "parseWithZod")
       .mockImplementation(() => null);
-    const cleanUpDisplayMock = vi.spyOn(parseExports, "cleanUpDisplay");
-    const displaySuccessMock = vi.spyOn(domExports, "displaySuccess");
+    const cleanUpDisplayMock = vi.spyOn(domExports, "cleanUpDisplay");
+    const displaySuccessMock = vi.spyOn(domExports, "createSuccessMessage");
     const consoleInfoSpy = vi.spyOn(console, "info");
     const buttonElement = document.createElement("button");
 
@@ -62,8 +62,8 @@ describe("validator", () => {
       .mockImplementation(() => {
         throw new Error("Something went wrong");
       });
-    const displaySuccessMock = vi.spyOn(domExports, "displaySuccess");
-    const cleanUpDisplayMock = vi.spyOn(parseExports, "cleanUpDisplay");
+    const cleanUpDisplayMock = vi.spyOn(domExports, "cleanUpDisplay");
+    const displaySuccessMock = vi.spyOn(domExports, "createSuccessMessage");
     const createGenericErrorMessageMock = vi.spyOn(
       domExports,
       "createGenericErrorMessage"
@@ -106,8 +106,8 @@ describe("validator", () => {
           },
         ]);
       });
-    const displaySuccessMock = vi.spyOn(domExports, "displaySuccess");
-    const cleanUpDisplayMock = vi.spyOn(parseExports, "cleanUpDisplay");
+    const cleanUpDisplayMock = vi.spyOn(domExports, "cleanUpDisplay");
+    const displaySuccessMock = vi.spyOn(domExports, "createSuccessMessage");
     const createErrorMessageMock = vi.spyOn(domExports, "createErrorMessage");
     const consoleErrorSpy = vi.spyOn(console, "error");
 

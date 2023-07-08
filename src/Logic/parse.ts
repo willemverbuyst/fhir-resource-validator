@@ -1,16 +1,9 @@
+import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
+import { Patient } from "../Resources/Patient";
 import { Resources, ResourceType } from "../Resources/resources";
-import {
-  cleanUpErrorDisplay,
-  cleanUpSuccessDisplay,
-  createGenericErrorMessage,
-} from "./dom";
-
-export function cleanUpDisplay() {
-  cleanUpErrorDisplay();
-  cleanUpSuccessDisplay();
-}
+import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
 
 export function parseJSONInput() {
   const input = document.getElementById("resourceInput");
@@ -32,11 +25,17 @@ export function parseJSONInput() {
 
 export function parseWithZod(value: unknown, resourceType: ResourceType) {
   switch (resourceType) {
+    case Resources.Consent:
+      Consent.parse(value);
+      break;
     case Resources.Encounter:
       Encounter.parse(value);
       break;
     case Resources.Flag:
       Flag.parse(value);
+      break;
+    case Resources.Patient:
+      Patient.parse(value);
       break;
   }
 }

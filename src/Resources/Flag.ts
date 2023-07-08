@@ -1,15 +1,12 @@
 import { z } from "zod";
 import { CodeableConcept } from "./Elements/CodeableConcept";
 import { DomainResource } from "./Elements/DomainResource";
-import { Narrative } from "./Elements/Narrative";
 import { Period } from "./Elements/Period";
 import { Reference } from "./Elements/Reference";
 import { Resources } from "./resources";
 
 export const Flag = DomainResource.extend({
   resourceType: z.literal(Resources.Flag),
-  id: z.string().optional(),
-  text: Narrative.optional(),
   identifier: z.array(z.unknown()).optional(),
   status: z.enum(["active", "inactive", "entered-in-error"]),
   category: z.array(CodeableConcept).optional(),

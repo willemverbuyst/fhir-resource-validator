@@ -1,116 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ZodIssueCode, ZodParsedType } from "zod";
 import {
-  cleanUpErrorDisplay,
-  cleanUpSuccessDisplay,
-  createErrorCard,
+  cleanUpDisplay,
+  createCard,
   createErrorMessage,
-  createErrorParagraph,
   createGenericErrorMessage,
-  displayError,
-  displaySuccess,
+  createParagraph,
+  displayMessage,
 } from "./dom";
 
-describe("cleanUpSuccessDisplay", () => {
-  beforeEach(() => {
-    const successMessageElement = document.createElement("div");
-    successMessageElement.id = "successMessage";
-
-    const child1 = document.createElement("p");
-    const child2 = document.createElement("p");
-    successMessageElement.appendChild(child1);
-    successMessageElement.appendChild(child2);
-
-    document.body.appendChild(successMessageElement);
-  });
-
-  afterEach(() => {
-    const successMessageElement = document.getElementById("successMessage");
-
-    if (successMessageElement) {
-      successMessageElement.remove();
-    }
-  });
-
-  it("should remove all child elements from the success message element", () => {
-    cleanUpSuccessDisplay();
-
-    const successMessageElement = document.getElementById(
-      "successMessage"
-    ) as HTMLDivElement;
-
-    expect(successMessageElement.childElementCount).toBe(0);
-  });
-
-  it("should handle the case when no success message element is found", () => {
-    const successMessageElement = document.getElementById(
-      "successMessage"
-    ) as HTMLDivElement;
-
-    successMessageElement.remove();
-
-    const consoleWarnSpy = vi.spyOn(global.console, "warn");
-
-    cleanUpSuccessDisplay();
-
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "No success message element found"
-    );
-
-    consoleWarnSpy.mockRestore();
-  });
-});
-
-describe("displaySuccess", () => {
-  beforeEach(() => {
-    const successMessageElement = document.createElement("div");
-    successMessageElement.id = "successMessage";
-    document.body.appendChild(successMessageElement);
-  });
-
-  afterEach(() => {
-    const successMessageElement = document.getElementById("successMessage");
-
-    if (successMessageElement) {
-      successMessageElement.remove();
-    }
-  });
-
-  it("should handle the case when no success message element is found", () => {
-    const successMessageElement = document.getElementById(
-      "successMessage"
-    ) as HTMLDivElement;
-
-    successMessageElement.remove();
-
-    const consoleWarnSpy = vi.spyOn(global.console, "warn");
-
-    displaySuccess();
-
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "No success message element found"
-    );
-
-    consoleWarnSpy.mockRestore();
-  });
-
-  it("should add success card to successMessage element", () => {
-    displaySuccess();
-
-    const successCard = document.querySelector("#successMessage > div");
-    const title = successCard?.querySelector("h4");
-    const titleText = title?.textContent;
-
-    expect(successCard).not.toBeNull();
-    expect(title).not.toBeNull();
-    expect(titleText).toBe("Looking good!");
-  });
-});
-
-describe("createErrorCard", () => {
+describe("createCard", () => {
   it("should create an error card with the given text", () => {
-    const text = "Something went wrong!";
-    const errorCard = createErrorCard(text);
+    const text = "Foobar!";
+    const errorCard = createCard("ERROR", text);
 
     expect(errorCard).toBeInstanceOf(HTMLDivElement);
     expect(errorCard.classList.contains("error-card")).toBe(true);
@@ -120,141 +22,165 @@ describe("createErrorCard", () => {
     expect(title?.textContent).toBe(text);
   });
 
-  it("should create an error card with default text when no text is provided", () => {
-    const defaultText = "ERROR";
-    const errorCard = createErrorCard();
+  it("should create an warning card with the given text", () => {
+    const text = "Foobar!";
+    const errorCard = createCard("WARNING", text);
+
+    expect(errorCard).toBeInstanceOf(HTMLDivElement);
+    expect(errorCard.classList.contains("warning-card")).toBe(true);
+
+    const title = errorCard.querySelector("h4");
+    expect(title).not.toBeNull();
+    expect(title?.textContent).toBe(text);
+  });
+
+  it("should create an error card with the given text", () => {
+    const text = "Foobar!";
+    const errorCard = createCard("SUCCESS", text);
+
+    expect(errorCard).toBeInstanceOf(HTMLDivElement);
+    expect(errorCard.classList.contains("success-card")).toBe(true);
+
+    const title = errorCard.querySelector("h4");
+    expect(title).not.toBeNull();
+    expect(title?.textContent).toBe(text);
+  });
+
+  it("should create an error card with no text when no text is provided", () => {
+    const errorCard = createCard("ERROR");
 
     expect(errorCard).toBeInstanceOf(HTMLDivElement);
     expect(errorCard.classList.contains("error-card")).toBe(true);
 
     const title = errorCard.querySelector("h4");
-    expect(title).not.toBeNull();
-    expect(title?.textContent).toBe(defaultText);
+    expect(title).toBeNull();
   });
 });
 
-describe("createErrorParagraph", () => {
+describe("createParagraph", () => {
   it("should create a paragraph element with the given text", () => {
-    const text = "An error occurred!";
-    const paragraph = createErrorParagraph(text);
+    const text = "foobar";
+    const paragraph = createParagraph(text);
 
     expect(paragraph).toBeInstanceOf(HTMLParagraphElement);
     expect(paragraph.textContent).toBe(text);
   });
 });
 
-describe("cleanUpErrorDisplay", () => {
+describe("cleanUpDisplay", () => {
   beforeEach(() => {
-    const errorMessageElement = document.createElement("div");
-    errorMessageElement.id = "errorMessage";
-    const child1 = document.createElement("p");
-    child1.textContent = "Error 1";
-    const child2 = document.createElement("p");
-    child2.textContent = "Error 2";
-    const child3 = document.createElement("p");
-    child3.textContent = "Error 3";
-    errorMessageElement.appendChild(child1);
-    errorMessageElement.appendChild(child2);
-    errorMessageElement.appendChild(child3);
+    const messageElement = document.createElement("div");
+    messageElement.id = "message";
 
-    document.body.appendChild(errorMessageElement);
+    const child1 = document.createElement("p");
+    const child2 = document.createElement("p");
+    messageElement.appendChild(child1);
+    messageElement.appendChild(child2);
+
+    document.body.appendChild(messageElement);
   });
 
   afterEach(() => {
-    const errorMessageElement = document.getElementById("errorMessage");
+    const messageElement = document.getElementById("message");
 
-    if (errorMessageElement) {
-      errorMessageElement.remove();
+    if (messageElement) {
+      messageElement.remove();
     }
   });
-  it("should remove all child elements from the error message element", () => {
-    cleanUpErrorDisplay();
 
-    const errorMessage = document.getElementById("errorMessage");
-    expect(errorMessage).toBeInstanceOf(HTMLDivElement);
-    expect(errorMessage?.childElementCount).toBe(0);
+  it("should remove all child elements from the success message element", () => {
+    cleanUpDisplay();
+
+    const messageElement = document.getElementById("message") as HTMLDivElement;
+
+    expect(messageElement.childElementCount).toBe(0);
   });
 
-  it("should not throw any errors when no error message element is found", () => {
-    expect(cleanUpErrorDisplay).not.toThrow();
-  });
+  it("should handle the case when no success message element is found", () => {
+    const messageElement = document.getElementById("message") as HTMLDivElement;
 
-  it("should handle the case when no error message element is found", () => {
-    const errorMessageElement = document.getElementById(
-      "errorMessage"
-    ) as HTMLDivElement;
-
-    errorMessageElement.remove();
+    messageElement.remove();
 
     const consoleWarnSpy = vi.spyOn(global.console, "warn");
 
-    cleanUpErrorDisplay();
+    cleanUpDisplay();
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "No error message element found"
-    );
+    expect(consoleWarnSpy).toHaveBeenCalledWith("No message element found");
 
     consoleWarnSpy.mockRestore();
   });
 });
 
-describe("displayError", () => {
+describe("displayMessage", () => {
   beforeEach(() => {
-    const errorMessageElement = document.createElement("div");
-    errorMessageElement.id = "errorMessage";
+    const message = document.createElement("div");
+    message.id = "message";
 
-    document.body.appendChild(errorMessageElement);
+    document.body.appendChild(message);
   });
 
   afterEach(() => {
-    const errorMessageElement = document.getElementById("errorMessage");
+    const message = document.getElementById("message");
 
-    if (errorMessageElement) {
-      errorMessageElement.remove();
+    if (message) {
+      message.remove();
     }
   });
 
-  it("should append the error card and paragraph to the error message element", () => {
-    const errorCard = document.createElement("div");
+  it("should append the card and paragraph to the error message element", () => {
+    const card = document.createElement("div");
     const paragraph = document.createElement("p");
-    paragraph.textContent = "An error occurred!";
+    paragraph.textContent = "Foobar!";
 
-    displayError(errorCard, paragraph);
+    displayMessage(card, paragraph);
 
-    const errorMessage = document.getElementById("errorMessage");
-    expect(errorMessage).toBeInstanceOf(HTMLDivElement);
-    expect(errorMessage?.childElementCount).toBe(1);
+    const message = document.getElementById("message");
+    expect(message).toBeInstanceOf(HTMLDivElement);
+    expect(message?.childElementCount).toBe(1);
 
-    const appendedErrorCard = errorMessage?.querySelector("div");
-    expect(appendedErrorCard).toBe(errorCard);
+    const appendedCard = message?.querySelector("div");
+    expect(appendedCard).toBe(card);
 
-    const appendedParagraph = errorCard.querySelector("p");
+    const appendedParagraph = card.querySelector("p");
     expect(appendedParagraph).toBe(paragraph);
-    expect(appendedParagraph?.textContent).toBe("An error occurred!");
+    expect(appendedParagraph?.textContent).toBe("Foobar!");
   });
 
-  it("should not throw any errors when no error message element is found", () => {
-    const errorCard = document.createElement("div");
+  it("should append the card when there is no paragraph to the error message element", () => {
+    const card = document.createElement("div");
+
+    displayMessage(card);
+
+    const message = document.getElementById("message");
+    expect(message).toBeInstanceOf(HTMLDivElement);
+    expect(message?.childElementCount).toBe(1);
+
+    const appendedCard = message?.querySelector("div");
+    expect(appendedCard).toBe(card);
+  });
+
+  it("should not throw any errors when no message element is found", () => {
+    const card = document.createElement("div");
     const paragraph = document.createElement("p");
-    paragraph.textContent = "An error occurred!";
+    paragraph.textContent = "Foobar!";
 
-    expect(() => displayError(errorCard, paragraph)).not.toThrow();
+    expect(() => displayMessage(card, paragraph)).not.toThrow();
   });
 
-  it("should handle the case when no error message element is found", () => {
-    const errorMessageElement = document.getElementById(
-      "errorMessage"
-    ) as HTMLDivElement;
+  it("should handle the case when no message element is found", () => {
+    const messageElement = document.getElementById("message") as HTMLDivElement;
 
-    errorMessageElement.remove();
+    messageElement.remove();
+
+    const card = document.createElement("div");
+    const paragraph = document.createElement("p");
+    paragraph.textContent = "Foobar!";
 
     const consoleWarnSpy = vi.spyOn(global.console, "warn");
 
-    cleanUpErrorDisplay();
+    displayMessage(card, paragraph);
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "No error message element found"
-    );
+    expect(consoleWarnSpy).toHaveBeenCalledWith("No message element found");
 
     consoleWarnSpy.mockRestore();
   });
@@ -262,17 +188,17 @@ describe("displayError", () => {
 
 describe("createErrorMessage", () => {
   beforeEach(() => {
-    const errorMessageElement = document.createElement("div");
-    errorMessageElement.id = "errorMessage";
+    const messageElement = document.createElement("div");
+    messageElement.id = "message";
 
-    document.body.appendChild(errorMessageElement);
+    document.body.appendChild(messageElement);
   });
 
   afterEach(() => {
-    const errorMessageElement = document.getElementById("errorMessage");
+    const messageElement = document.getElementById("message");
 
-    if (errorMessageElement) {
-      errorMessageElement.remove();
+    if (messageElement) {
+      messageElement.remove();
     }
   });
 
@@ -288,7 +214,7 @@ describe("createErrorMessage", () => {
 
     createErrorMessage(issue, index);
 
-    const errorMessage = document.getElementById("errorMessage");
+    const errorMessage = document.getElementById("message");
     expect(errorMessage).toBeInstanceOf(HTMLDivElement);
     expect(errorMessage?.childElementCount).toBe(1);
 
@@ -298,6 +224,38 @@ describe("createErrorMessage", () => {
     const appendedParagraph = appendedErrorCard?.querySelector("p");
     expect(appendedParagraph).not.toBeNull();
     expect(appendedParagraph?.textContent).toBe("status: Required");
+
+    const h4Element = document.querySelectorAll(".error-card h4")[0].innerHTML;
+    expect(h4Element).toBe("ERROR #1");
+  });
+
+  it("should create an warning message with the correct error card and paragraph", () => {
+    const issue = {
+      expected: "'active' | 'inactive' | 'entered-in-error'",
+      received: ZodParsedType.undefined,
+      code: ZodIssueCode.invalid_literal,
+      path: ["status"],
+      message: "Required",
+      keys: ["_birthDate"],
+    };
+    const index = 0;
+
+    createErrorMessage(issue, index);
+
+    const errorMessage = document.getElementById("message");
+    expect(errorMessage).toBeInstanceOf(HTMLDivElement);
+    expect(errorMessage?.childElementCount).toBe(1);
+
+    const appendedErrorCard = errorMessage?.querySelector(".warning-card");
+    expect(appendedErrorCard).not.toBeNull();
+
+    const appendedParagraph = appendedErrorCard?.querySelector("p");
+    expect(appendedParagraph).not.toBeNull();
+    expect(appendedParagraph?.textContent).toBe("status: Required");
+
+    const h4Element =
+      document.querySelectorAll(".warning-card h4")[0].innerHTML;
+    expect(h4Element).toBe("WARNING #1");
   });
 
   it("should create an error message with the correct error card and paragraph even if path is missing in issue", () => {
@@ -312,7 +270,7 @@ describe("createErrorMessage", () => {
 
     createErrorMessage(issue, index);
 
-    const errorMessage = document.getElementById("errorMessage");
+    const errorMessage = document.getElementById("message");
     expect(errorMessage).toBeInstanceOf(HTMLDivElement);
     expect(errorMessage?.childElementCount).toBe(1);
 
@@ -327,35 +285,34 @@ describe("createErrorMessage", () => {
 
 describe("createGenericErrorMessage", () => {
   beforeEach(() => {
-    const errorMessageElement = document.createElement("div");
-    errorMessageElement.id = "errorMessage";
+    const messageElement = document.createElement("div");
+    messageElement.id = "message";
 
-    document.body.appendChild(errorMessageElement);
+    document.body.appendChild(messageElement);
   });
 
   afterEach(() => {
-    const errorMessageElement = document.getElementById("errorMessage");
+    const messageElement = document.getElementById("message");
 
-    if (errorMessageElement) {
-      errorMessageElement.remove();
+    if (messageElement) {
+      messageElement.remove();
     }
   });
 
-  it("should create an error message with the correct error card and paragraph", () => {
-    const text = "Error, something went wrong";
+  it("should create an error message with the correct card and paragraph", () => {
+    const text = "Error, foobar";
 
     createGenericErrorMessage(text);
 
-    const errorMessage = document.getElementById("errorMessage");
+    const errorMessage = document.getElementById("message");
     expect(errorMessage).toBeInstanceOf(HTMLDivElement);
     expect(errorMessage?.childElementCount).toBe(1);
 
     const appendedErrorCard = errorMessage?.querySelector(".error-card");
     expect(appendedErrorCard).not.toBeNull();
 
-    const appendedParagraph = appendedErrorCard?.querySelector("p");
-    expect(appendedParagraph).not.toBeNull();
-    expect(appendedParagraph?.textContent).toBe(text);
+    const h4Element = document.querySelectorAll(".error-card h4")[0].innerHTML;
+    expect(h4Element).toBe(text);
   });
 
   it("should create an error message with default text when no text is provided", () => {
@@ -363,15 +320,14 @@ describe("createGenericErrorMessage", () => {
 
     createGenericErrorMessage();
 
-    const errorMessage = document.getElementById("errorMessage");
+    const errorMessage = document.getElementById("message");
     expect(errorMessage).toBeInstanceOf(HTMLDivElement);
     expect(errorMessage?.childElementCount).toBe(1);
 
     const appendedErrorCard = errorMessage?.querySelector(".error-card");
     expect(appendedErrorCard).not.toBeNull();
 
-    const appendedParagraph = appendedErrorCard?.querySelector("p");
-    expect(appendedParagraph).not.toBeNull();
-    expect(appendedParagraph?.textContent).toBe(defaultText);
+    const h4Element = document.querySelectorAll(".error-card h4")[0].innerHTML;
+    expect(h4Element).toBe(defaultText);
   });
 });
