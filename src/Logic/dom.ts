@@ -53,7 +53,7 @@ export function displayMessage(
   const message = document.getElementById("message");
 
   if (!(message && message instanceof HTMLDivElement)) {
-    console.warn("message element found");
+    console.warn("No message element found");
     return;
   }
 
@@ -67,13 +67,13 @@ export function displayMessage(
 export function createErrorMessage(issue: z.ZodIssue, index: number) {
   const messageType =
     "keys" in issue && String(issue.keys).startsWith("_") ? "WARNING" : "ERROR";
-  const errorCard = createCard(messageType, `${messageType} #${index + 1}`);
+  const card = createCard(messageType, `${messageType} #${index + 1}`);
   const message = issue.path.length
     ? `${issue.path}: ${issue.message}`
     : issue.message;
   const paragraph = createParagraph(message);
 
-  displayMessage(errorCard, paragraph);
+  displayMessage(card, paragraph);
 }
 
 export function createGenericErrorMessage(text = "Something went wrong") {

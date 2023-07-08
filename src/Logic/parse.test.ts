@@ -3,22 +3,7 @@ import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
 import { Resources } from "../Resources/resources";
 import * as exports from "./dom";
-import { cleanUpDisplay, parseJSONInput, parseWithZod } from "./parse";
-
-describe("cleanUpDisplay", () => {
-  it("should clean up error and success displays", () => {
-    const cleanUpErrorDisplayMock = vi.spyOn(exports, "cleanUpErrorDisplay");
-    const cleanUpSuccessDisplayMock = vi.spyOn(
-      exports,
-      "cleanUpSuccessDisplay"
-    );
-
-    cleanUpDisplay();
-
-    expect(cleanUpErrorDisplayMock).toHaveBeenCalled();
-    expect(cleanUpSuccessDisplayMock).toHaveBeenCalled();
-  });
-});
+import { parseJSONInput, parseWithZod } from "./parse";
 
 describe("parseJSONInput", () => {
   beforeEach(() => {
