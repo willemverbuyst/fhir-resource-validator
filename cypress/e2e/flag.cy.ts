@@ -1,4 +1,5 @@
-import { default as flag_1, default as flag_2 } from "../fixtures/flag_1.json";
+import flag_1 from "../fixtures/flag_1.json";
+import flag_2 from "../fixtures/flag_2.json";
 
 describe("flag.spec.cy", () => {
   beforeEach(() => {
