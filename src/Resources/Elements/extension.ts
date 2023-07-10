@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CodeableConcept } from "./CodeableConcept";
+import { Quantity } from "./Quantity";
 
 const base = z
   .object({
@@ -7,6 +8,9 @@ const base = z
     valueBase64Binary: z.string().regex(/(\s*([0-9a-zA-Z\\+\\=]){4}\s*)+/),
     valueBoolean: z.boolean(),
     valueCodeableConcept: CodeableConcept,
+    valueString: z.string(),
+    valueQuantity: Quantity.optional(),
+    valueCode: z.string(),
   })
   .strict()
   .partial();

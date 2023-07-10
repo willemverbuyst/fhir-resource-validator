@@ -14,7 +14,7 @@ import { Resources } from "./resources";
 export const Patient = DomainResource.extend({
   resourceType: z.literal(Resources.Patient),
   identifier: z.array(z.unknown()).optional(),
-  active: z.boolean(),
+  active: z.boolean().optional(),
   name: z.array(HumanName).optional(),
   telecom: z.array(ContactPoint).optional(),
   gender: z.enum(["male", "female", "other", "unknown"]).optional(),
@@ -47,7 +47,9 @@ export const Patient = DomainResource.extend({
       })
     )
     .optional(),
-  generalPractitioner: Reference(Resources.PractitionerRole).optional(),
+  generalPractitioner: z
+    .array(Reference(Resources.PractitionerRole))
+    .optional(),
   managingOrganization: Reference(Resources.Organization).optional(),
   link: z
     .array(
