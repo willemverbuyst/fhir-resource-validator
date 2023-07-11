@@ -88,9 +88,10 @@ describe("flag.spec.cy", () => {
     cy.get(".success-card").should("contain", "Looking good!");
   });
 
-  it("should add patient_11 and have a successfull validation", () => {
+  it("should add patient_11 and have a successfull validation with warning", () => {
     cy.get("#resourceInput").invoke("val", JSON.stringify(patient_11));
     cy.get("#validateBtn").click();
+    cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
       "Unrecognized key(s) in object: '_gender'"
@@ -139,9 +140,10 @@ describe("flag.spec.cy", () => {
     cy.get(".success-card").should("contain", "Looking good!");
   });
 
-  it("should add patient_19 and have a successfull validation", () => {
+  it("should add patient_19 and have a successfull validation with warning", () => {
     cy.get("#resourceInput").invoke("val", JSON.stringify(patient_19));
     cy.get("#validateBtn").click();
+    cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
       "Unrecognized key(s) in object: '_birthDate'"
@@ -154,18 +156,20 @@ describe("flag.spec.cy", () => {
     cy.get(".success-card").should("contain", "Looking good!");
   });
 
-  it("should add patient_21 and have a successfull validation", () => {
+  it("should add patient_21 and have a successfull validation with warning", () => {
     cy.get("#resourceInput").invoke("val", JSON.stringify(patient_21));
     cy.get("#validateBtn").click();
+    cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
       "Unrecognized key(s) in object: '_birthDate'"
     );
   });
 
-  it("should add patient_22 and have a successfull validation", () => {
+  it("should add patient_22 and have a successfull validation with warning", () => {
     cy.get("#resourceInput").invoke("val", JSON.stringify(patient_22));
     cy.get("#validateBtn").click();
+    cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
       "Unrecognized key(s) in object: '_birthDate'"
