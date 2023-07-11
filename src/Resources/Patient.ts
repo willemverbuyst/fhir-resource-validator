@@ -48,13 +48,19 @@ export const Patient = DomainResource.extend({
     )
     .optional(),
   generalPractitioner: z
-    .array(Reference(Resources.PractitionerRole))
+    .array(
+      Reference([
+        Resources.Organization,
+        Resources.Practitioner,
+        Resources.PractitionerRole,
+      ])
+    )
     .optional(),
   managingOrganization: Reference(Resources.Organization).optional(),
   link: z
     .array(
       z.object({
-        other: Reference(Resources.Patient),
+        other: Reference([Resources.Patient, Resources.RelatedPerson]),
         type: z.enum(["replaced-by", "replaces", "refer", "seealso"]),
       })
     )

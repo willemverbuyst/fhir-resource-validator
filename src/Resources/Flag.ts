@@ -12,9 +12,24 @@ export const Flag = DomainResource.extend({
   category: z.array(CodeableConcept).optional(),
   code: CodeableConcept,
   period: Period.optional(),
-  subject: Reference(Resources.Patient),
+  subject: Reference([
+    Resources.Patient,
+    Resources.Location,
+    Resources.Group,
+    Resources.Organization,
+    Resources.Practitioner,
+    Resources.PlanDefinition,
+    Resources.Medication,
+    Resources.Procedure,
+  ]),
   encounter: Reference(Resources.Encounter).optional(),
-  author: Reference(Resources.Practitioner).optional(),
+  author: Reference([
+    Resources.Device,
+    Resources.Organization,
+    Resources.Patient,
+    Resources.Practitioner,
+    Resources.PractitionerRole,
+  ]).optional(),
 }).strict();
 
 export type Flag = z.infer<typeof Flag>;

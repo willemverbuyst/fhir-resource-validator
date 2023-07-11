@@ -1,7 +1,11 @@
 import { z } from "zod";
 
-export function Reference(resource: string) {
-  const regex = new RegExp(`^${resource}`);
+export function Reference(resource: string | string[]) {
+  const regex =
+    typeof resource === "string"
+      ? new RegExp(`^${resource}`)
+      : new RegExp(`^${resource.join("|")}`);
+
   const Reference = z
     .object({
       reference: z.string().regex(regex).optional(),
