@@ -30,25 +30,25 @@ describe("parseJSONInput", () => {
 
   it("should log an error and display a generic error message when invalid JSON is provided", () => {
     const textareaElement = document.getElementById(
-      "resourceInput"
+      "resourceInput",
     ) as HTMLTextAreaElement;
     textareaElement.value = "just a random string";
 
     const createGenericErrorMessageyMock = vi.spyOn(
       exports,
-      "createGenericErrorMessage"
+      "createGenericErrorMessage",
     );
 
     parseJSONInput();
 
     expect(createGenericErrorMessageyMock).toHaveBeenCalledWith(
-      "Not valid JSON"
+      "Not valid JSON",
     );
   });
 
   it("should return null and log a warning when no input element is found", () => {
     const textareaElement = document.getElementById(
-      "resourceInput"
+      "resourceInput",
     ) as HTMLTextAreaElement;
     textareaElement.remove();
 
@@ -79,6 +79,6 @@ describe("parseWithZod", () => {
       parseWithZod(value, resourceType);
 
       expect(parseSpy).toHaveBeenCalledWith(value);
-    }
+    },
   );
 });

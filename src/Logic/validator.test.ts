@@ -66,7 +66,7 @@ describe("validator", () => {
     const displaySuccessMock = vi.spyOn(domExports, "createSuccessMessage");
     const createGenericErrorMessageMock = vi.spyOn(
       domExports,
-      "createGenericErrorMessage"
+      "createGenericErrorMessage",
     );
     const consoleErrorSpy = vi.spyOn(console, "error");
 
@@ -81,7 +81,7 @@ describe("validator", () => {
     expect(displaySuccessMock).not.toHaveBeenCalled();
     expect(cleanUpDisplayMock).toHaveBeenCalled();
     expect(createGenericErrorMessageMock).toHaveBeenCalledWith(
-      "Something went wrong"
+      "Something went wrong",
     );
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
@@ -130,7 +130,7 @@ describe("validator", () => {
         path: ["status"],
         message: "Required",
       },
-      0
+      0,
     );
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
@@ -146,7 +146,7 @@ describe("validator", () => {
       });
     const createGenericErrorMessageMock = vi.spyOn(
       domExports,
-      "createGenericErrorMessage"
+      "createGenericErrorMessage",
     );
     const consoleErrorSpy = vi.spyOn(console, "error");
 
@@ -158,7 +158,7 @@ describe("validator", () => {
     expect(parseJSONInputMock).toHaveBeenCalled();
     expect(findResourceTypeMock).toHaveBeenCalled();
     expect(createGenericErrorMessageMock).not.toHaveBeenCalledWith(
-      "Something went wrong"
+      "Something went wrong",
     );
     expect(createGenericErrorMessageMock).toHaveBeenCalledTimes(1);
     expect(consoleErrorSpy).toHaveBeenCalled();
