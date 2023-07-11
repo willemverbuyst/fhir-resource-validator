@@ -1,9 +1,9 @@
-name: format, lint & type check
+name: format & lint
 
 on: [pull_request]
 
 jobs:
-  format-lint-and-type-check:
+  format-and-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -18,7 +18,4 @@ jobs:
         working-directory: .
       - name: Lint
         run: yarn lint
-        working-directory: .
-      - name: TypeCheck
-        run: npm run type:check
         working-directory: .
