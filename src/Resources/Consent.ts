@@ -21,10 +21,25 @@ export const Consent = DomainResource.extend({
   category: z.array(CodeableConcept).min(1),
   patient: Reference(Resources.Patient),
   dateTime: dateTime.optional(),
-  performer: z.array(Reference(Resources.Organization)).optional(),
+  performer: z
+    .array(
+      Reference([
+        Resources.Organization,
+        Resources.Patient,
+        Resources.Practitioner,
+        Resources.RelatedPerson,
+        Resources.PractitionerRole,
+      ])
+    )
+    .optional(),
   organization: z.array(Reference(Resources.Organization)).optional(),
   sourceAttachment: Attachment.optional(),
-  sourceReference: Reference(Resources.Consent).optional(),
+  sourceReference: Reference([
+    Resources.Consent,
+    Resources.DocumentReference,
+    Resources.Contract,
+    Resources.QuestionnaireResponse,
+  ]).optional(),
   policy: z
     .object({
       authority: z.string().optional(),
@@ -35,7 +50,7 @@ export const Consent = DomainResource.extend({
   verification: z
     .object({
       verified: z.boolean(),
-      verifiedWith: Reference(Resources.Patient),
+      verifiedWith: Reference([Resources.Patient, Resources.RelatedPerson]),
       verificationDate: dateTime,
     })
     .optional(),
