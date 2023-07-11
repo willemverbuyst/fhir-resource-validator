@@ -29,7 +29,7 @@ export const Consent = DomainResource.extend({
         Resources.Practitioner,
         Resources.RelatedPerson,
         Resources.PractitionerRole,
-      ])
+      ]),
     )
     .optional(),
   organization: z.array(Reference(Resources.Organization)).optional(),
@@ -78,8 +78,8 @@ export const Consent = DomainResource.extend({
           message:
             "Can't have both sourceAttachment and sourceReference at the same time",
         }),
-      }
-    )
+      },
+    ),
   );
 
 export type Consent = z.infer<typeof Consent>;

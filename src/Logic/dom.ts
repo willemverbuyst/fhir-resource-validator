@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export function createCard(
   type: "ERROR" | "SUCCESS" | "WARNING",
-  text?: string
+  text?: string,
 ) {
   const card = document.createElement("div");
   card.className =
@@ -48,7 +48,7 @@ export function cleanUpDisplay() {
 
 export function displayMessage(
   card: HTMLDivElement,
-  paragraph?: HTMLParagraphElement
+  paragraph?: HTMLParagraphElement,
 ) {
   const message = document.getElementById("message");
 

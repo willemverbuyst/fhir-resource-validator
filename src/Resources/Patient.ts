@@ -36,7 +36,7 @@ export const Patient = DomainResource.extend({
         gender: z.enum(["male", "female", "other", "unknown"]).optional(),
         organization: Reference(Resources.Organization).optional(),
         period: Period.optional(),
-      })
+      }),
     )
     .optional(),
   communication: z
@@ -44,7 +44,7 @@ export const Patient = DomainResource.extend({
       z.object({
         language: CodeableConcept,
         preferred: z.boolean().optional(),
-      })
+      }),
     )
     .optional(),
   generalPractitioner: z
@@ -53,7 +53,7 @@ export const Patient = DomainResource.extend({
         Resources.Organization,
         Resources.Practitioner,
         Resources.PractitionerRole,
-      ])
+      ]),
     )
     .optional(),
   managingOrganization: Reference(Resources.Organization).optional(),
@@ -62,7 +62,7 @@ export const Patient = DomainResource.extend({
       z.object({
         other: Reference([Resources.Patient, Resources.RelatedPerson]),
         type: z.enum(["replaced-by", "replaces", "refer", "seealso"]),
-      })
+      }),
     )
     .optional(),
 })
@@ -88,8 +88,8 @@ export const Patient = DomainResource.extend({
           message:
             "Can't have both deceasedBoolean and deceasedDateTime at the same time",
         }),
-      }
-    )
+      },
+    ),
   )
   .and(
     z.union(
@@ -112,8 +112,8 @@ export const Patient = DomainResource.extend({
           message:
             "Can't have both multipleBirthBoolean and multipleBirthInteger at the same time",
         }),
-      }
-    )
+      },
+    ),
   );
 
 export type Patient = z.infer<typeof Patient>;
