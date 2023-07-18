@@ -17,7 +17,7 @@ export const PractitionerRole = DomainResource.extend({
   code: z.array(CodeableConcept).optional(),
   specialty: z.array(CodeableConcept).optional(),
   location: z.array(Reference(Resources.Location)).optional(),
-  healtCareService: z.array(Reference(Resources.HealthCareService)).optional(),
+  healthcareService: z.array(Reference(Resources.HealthcareService)).optional(),
   telecom: z.array(ContactPoint).optional(),
   availableTime: z
     .array(
@@ -39,7 +39,7 @@ export const PractitionerRole = DomainResource.extend({
       }),
     )
     .optional(),
-  availabilityException: z.string().optional(),
+  availabilityExceptions: z.string().optional(),
   endpoint: z.array(Reference(Resources.Endpoint)).optional(),
 }).strict();
 

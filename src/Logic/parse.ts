@@ -2,6 +2,7 @@ import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
 import { Patient } from "../Resources/Patient";
+import { PractitionerRole } from "../Resources/PractitionerRole";
 import { Resources, ResourceType } from "../Resources/resources";
 import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
 
@@ -24,6 +25,7 @@ export function parseJSONInput() {
 }
 
 export function parseWithZod(value: unknown, resourceType: ResourceType) {
+  console.log("resourceType :>> ", resourceType);
   switch (resourceType) {
     case Resources.Consent:
       Consent.parse(value);
@@ -37,5 +39,10 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
     case Resources.Patient:
       Patient.parse(value);
       break;
+    case Resources.PractitionerRole:
+      PractitionerRole.parse(value);
+      break;
+    default:
+      throw new Error("Unhandled resource");
   }
 }
