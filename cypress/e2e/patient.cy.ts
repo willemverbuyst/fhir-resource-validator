@@ -21,7 +21,7 @@ import patient_5 from "../fixtures/patient_5.json";
 import patient_8 from "../fixtures/patient_8.json";
 import patient_9 from "../fixtures/patient_9.json";
 
-describe("flag.spec.cy", () => {
+describe("patient.cy.ts", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#resourceInput").clear();
@@ -33,12 +33,12 @@ describe("flag.spec.cy", () => {
     cy.get("#message > :nth-child(1) > h4").should("contain", "WARNING #1");
     cy.get(":nth-child(1) > p").should(
       "contain",
-      "contact,0,name: Unrecognized key(s) in object: '_family'"
+      "contact,0,name: Unrecognized key(s) in object: '_family'",
     );
     cy.get("#message > :nth-child(2) > h4").should("contain", "WARNING #2");
     cy.get(":nth-child(2) > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_birthDate'"
+      "Unrecognized key(s) in object: '_birthDate'",
     );
   });
 
@@ -54,7 +54,7 @@ describe("flag.spec.cy", () => {
     cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_gender'"
+      "Unrecognized key(s) in object: '_gender'",
     );
   });
 
@@ -94,7 +94,7 @@ describe("flag.spec.cy", () => {
     cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_gender'"
+      "Unrecognized key(s) in object: '_gender'",
     );
   });
 
@@ -146,7 +146,7 @@ describe("flag.spec.cy", () => {
     cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_birthDate'"
+      "Unrecognized key(s) in object: '_birthDate'",
     );
   });
 
@@ -162,7 +162,7 @@ describe("flag.spec.cy", () => {
     cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_birthDate'"
+      "Unrecognized key(s) in object: '_birthDate'",
     );
   });
 
@@ -172,7 +172,7 @@ describe("flag.spec.cy", () => {
     cy.get(".warning-card > h4").should("contain", "WARNING #1");
     cy.get(".warning-card > p").should(
       "contain",
-      "Unrecognized key(s) in object: '_birthDate'"
+      "Unrecognized key(s) in object: '_birthDate'",
     );
   });
 

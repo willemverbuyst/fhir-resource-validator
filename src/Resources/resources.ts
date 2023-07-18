@@ -7,7 +7,7 @@ export const Resources = {
   Endpoint: "Endpoint",
   Flag: "Flag",
   Group: "Group",
-  HealthCareService: "HealthCareService",
+  HealthcareService: "HealthcareService",
   Location: "Location",
   Medication: "Medication",
   Patient: "Patient",

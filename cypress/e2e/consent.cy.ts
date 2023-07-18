@@ -9,7 +9,7 @@ import consent_5 from "../fixtures/consent_5.json";
 import consent_8 from "../fixtures/consent_8.json";
 import consent_9 from "../fixtures/consent_9.json";
 
-describe("flag.spec.cy", () => {
+describe("consent.cy.ts", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#resourceInput").clear();
