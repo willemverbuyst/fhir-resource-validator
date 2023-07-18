@@ -1,6 +1,7 @@
 import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
+import { Organization } from "../Resources/Organization";
 import { Patient } from "../Resources/Patient";
 import { PractitionerRole } from "../Resources/PractitionerRole";
 import { Resources, ResourceType } from "../Resources/resources";
@@ -35,6 +36,9 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
       break;
     case Resources.Flag:
       Flag.parse(value);
+      break;
+    case Resources.Organization:
+      Organization.parse(value);
       break;
     case Resources.Patient:
       Patient.parse(value);
