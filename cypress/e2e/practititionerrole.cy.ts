@@ -1,6 +1,6 @@
 import practitionerrole_1 from "../fixtures/practitionerrole_1.json";
 
-describe("practitionerrole.spec.cy", () => {
+describe("practitionerrole.cy.ts", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#resourceInput").clear();

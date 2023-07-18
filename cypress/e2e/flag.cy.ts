@@ -1,7 +1,7 @@
 import flag_1 from "../fixtures/flag_1.json";
 import flag_2 from "../fixtures/flag_2.json";
 
-describe("flag.spec.cy", () => {
+describe("flag.cy.ts", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#resourceInput").clear();
