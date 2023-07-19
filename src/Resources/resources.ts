@@ -1,4 +1,5 @@
 export const Resources = {
+  Bundle: "Bundle",
   Consent: "Consent",
   Contract: "Contract",
   Device: "Device",

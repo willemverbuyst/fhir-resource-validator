@@ -3,7 +3,7 @@ import { Attachment } from "./Elements/Attachment";
 import { CodeableConcept } from "./Elements/CodeableConcept";
 import { DomainResource } from "./Elements/DomainResource";
 import { Reference } from "./Elements/Reference";
-import { dateTime } from "./Elements/dateTime";
+import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
 
 export const Consent = DomainResource.extend({
@@ -20,7 +20,7 @@ export const Consent = DomainResource.extend({
   scope: CodeableConcept,
   category: z.array(CodeableConcept).min(1),
   patient: Reference(Resources.Patient),
-  dateTime: dateTime.optional(),
+  dateTime: dataTypes.dateTime.optional(),
   performer: z
     .array(
       Reference([
@@ -51,7 +51,7 @@ export const Consent = DomainResource.extend({
     .object({
       verified: z.boolean(),
       verifiedWith: Reference([Resources.Patient, Resources.RelatedPerson]),
-      verificationDate: dateTime,
+      verificationDate: dataTypes.dateTime,
     })
     .optional(),
   provision: z.unknown().optional(),

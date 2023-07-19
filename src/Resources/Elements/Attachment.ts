@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { dateTime } from "./dateTime";
+import { dataTypes } from "../dataTypes";
 
 export const Attachment = z
   .object({
@@ -10,6 +10,6 @@ export const Attachment = z
     size: z.unknown().optional(),
     hash: z.unknown().optional(),
     title: z.string().optional(),
-    creation: dateTime.optional(),
+    creation: dataTypes.dateTime.optional(),
   })
   .strict();

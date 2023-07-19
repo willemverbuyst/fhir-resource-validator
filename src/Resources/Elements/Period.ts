@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { dateTime } from "./dateTime";
+import { dataTypes } from "../dataTypes";
 
 export const Period = z
   .object({
-    start: dateTime.optional(),
-    end: dateTime.optional(),
+    start: dataTypes.dateTime.optional(),
+    end: dataTypes.dateTime.optional(),
   })
   .strict();
