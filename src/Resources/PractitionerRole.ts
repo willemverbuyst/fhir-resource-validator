@@ -4,7 +4,7 @@ import { ContactPoint } from "./Elements/ContactPoint";
 import { DomainResource } from "./Elements/DomainResource";
 import { Period } from "./Elements/Period";
 import { Reference } from "./Elements/Reference";
-import { time } from "./Elements/time";
+import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
 
 export const PractitionerRole = DomainResource.extend({
@@ -26,8 +26,8 @@ export const PractitionerRole = DomainResource.extend({
           .array(z.enum(["mon", "tue", "wed", "thu", "fri", "sat", "sun"]))
           .optional(),
         allDay: z.boolean().optional(),
-        availableStartTime: time.optional(),
-        availableEndTime: time.optional(),
+        availableStartTime: dataTypes.time.optional(),
+        availableEndTime: dataTypes.time.optional(),
       }),
     )
     .optional(),

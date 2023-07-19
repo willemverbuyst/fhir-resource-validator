@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { DomainResource } from "./Elements/DomainResource";
 import { Signature } from "./Elements/Signature";
-import { decimal } from "./Elements/decimal";
-import { instant } from "./Elements/instant";
+import { dataTypes } from "./dataTypes";
 import { fhirR4Resource } from "./fhirR4Resources";
 import { Resources } from "./resources";
 
@@ -20,7 +19,7 @@ export const Bundle = DomainResource.extend({
     "searchset",
     "collection",
   ]),
-  timestamp: instant.optional(),
+  timestamp: dataTypes.instant.optional(),
   total: z.number().nonnegative().max(2_147_483_647).optional(),
   link: z
     .object({
@@ -36,7 +35,7 @@ export const Bundle = DomainResource.extend({
         search: z
           .object({
             mode: z.enum(["match", "include", "outcome"]).optional(),
-            score: decimal.optional(),
+            score: dataTypes.decimal.optional(),
           })
           .optional(),
         request: z
@@ -54,7 +53,7 @@ export const Bundle = DomainResource.extend({
             status: z.string(),
             location: z.string().optional(),
             etag: z.string(),
-            lastModified: instant.optional(),
+            lastModified: dataTypes.instant.optional(),
             outcome: fhirR4Resource.optional(),
           })
           .optional(),

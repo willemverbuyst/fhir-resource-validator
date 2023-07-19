@@ -7,8 +7,7 @@ import { DomainResource } from "./Elements/DomainResource";
 import { HumanName } from "./Elements/HumanName";
 import { Period } from "./Elements/Period";
 import { Reference } from "./Elements/Reference";
-import { date } from "./Elements/date";
-import { dateTime } from "./Elements/dateTime";
+import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
 
 export const Patient = DomainResource.extend({
@@ -18,9 +17,9 @@ export const Patient = DomainResource.extend({
   name: z.array(HumanName).optional(),
   telecom: z.array(ContactPoint).optional(),
   gender: z.enum(["male", "female", "other", "unknown"]).optional(),
-  birthDate: date.optional(),
+  birthDate: dataTypes.date.optional(),
   deceasedBoolean: z.boolean().optional(),
-  deceasedDateTime: dateTime.optional(),
+  deceasedDateTime: dataTypes.dateTime.optional(),
   address: z.array(Address).optional(),
   maritalStatus: CodeableConcept.optional(),
   multipleBirthBoolean: z.boolean().optional(),
@@ -76,7 +75,7 @@ export const Patient = DomainResource.extend({
         }),
         z.object({
           deceasedBoolean: z.undefined(),
-          deceasedDateTime: dateTime,
+          deceasedDateTime: dataTypes.dateTime,
         }),
         z.object({
           deceasedBoolean: z.undefined(),
