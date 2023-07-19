@@ -12,7 +12,8 @@
     "test": "vitest --silent",
     "test:coverage": "vitest --silent run --coverage",
     "type:check": "tsc",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.61.0",

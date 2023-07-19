@@ -18,6 +18,8 @@ import patient_24 from "../fixtures/patient_24.json";
 import patient_3 from "../fixtures/patient_3.json";
 import patient_4 from "../fixtures/patient_4.json";
 import patient_5 from "../fixtures/patient_5.json";
+import patient_6 from "../fixtures/patient_6.json";
+import patient_7 from "../fixtures/patient_7.json";
 import patient_8 from "../fixtures/patient_8.json";
 import patient_9 from "../fixtures/patient_9.json";
 
@@ -66,6 +68,22 @@ describe("patient.cy.ts", () => {
 
   it("should add patient_5 and have a successfull validation", () => {
     cy.get("#resourceInput").invoke("val", JSON.stringify(patient_5));
+    cy.get("#validateBtn").click();
+    cy.get(".success-card").should("contain", "Looking good!");
+  });
+
+  it("should add patient_6 and have a successfull validation with warning", () => {
+    cy.get("#resourceInput").invoke("val", JSON.stringify(patient_6));
+    cy.get("#validateBtn").click();
+    cy.get(".warning-card > h4").should("contain", "WARNING #1");
+    cy.get(".warning-card > p").should(
+      "contain",
+      "Unrecognized key(s) in object: '_gender'",
+    );
+  });
+
+  it("should add patient_7 and have a successfull validation", () => {
+    cy.get("#resourceInput").invoke("val", JSON.stringify(patient_7));
     cy.get("#validateBtn").click();
     cy.get(".success-card").should("contain", "Looking good!");
   });
