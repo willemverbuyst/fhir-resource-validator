@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Resources } from "./resources";
+import { Resources } from "../resources";
 
 export const Encounter = z
   .object({

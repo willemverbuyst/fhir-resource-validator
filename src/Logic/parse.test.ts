@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Encounter } from "../Resources/Encounter";
-import { Flag } from "../Resources/Flag";
-import { Resources } from "../Resources/resources";
+import { Encounter } from "../fhirR4/Resources/Encounter";
+import { Flag } from "../fhirR4/Resources/Flag";
+import { Resources } from "../fhirR4/resources";
 import * as exports from "./dom";
 import { parseJSONInput, parseWithZod } from "./parse";
 

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { findResourceType } from "../Resources/resources";
 import {
   cleanUpDisplay,
   createErrorMessage,
@@ -7,6 +6,7 @@ import {
   createSuccessMessage,
 } from "./dom";
 import { parseJSONInput, parseWithZod } from "./parse";
+import { findResourceType } from "./resource";
 
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
