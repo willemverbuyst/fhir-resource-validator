@@ -1,3 +1,4 @@
+import { Bundle } from "../Resources/Bundle";
 import { Consent } from "../Resources/Consent";
 import { Encounter } from "../Resources/Encounter";
 import { Flag } from "../Resources/Flag";
@@ -28,6 +29,9 @@ export function parseJSONInput() {
 export function parseWithZod(value: unknown, resourceType: ResourceType) {
   console.log("resourceType :>> ", resourceType);
   switch (resourceType) {
+    case Resources.Bundle:
+      Bundle.parse(value);
+      break;
     case Resources.Consent:
       Consent.parse(value);
       break;
