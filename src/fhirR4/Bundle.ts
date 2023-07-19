@@ -1,8 +1,22 @@
 import { z } from "zod";
-import { DomainResource } from "./Elements/DomainResource";
+import { DomainResource } from "./DomainResource";
+import { Consent } from "./Resources/Consent";
+import { Encounter } from "./Resources/Encounter";
+import { Flag } from "./Resources/Flag";
+import { Organization } from "./Resources/Organization";
+import { Patient } from "./Resources/Patient";
+import { PractitionerRole } from "./Resources/PractitionerRole";
 import { dataTypes } from "./dataTypes";
-import { fhirR4Resource } from "./fhirR4Resources";
 import { Resources } from "./resources";
+
+const fhirR4Resource = z.union([
+  Consent,
+  Encounter,
+  Flag,
+  Organization,
+  Patient,
+  PractitionerRole,
+]);
 
 export const Bundle = DomainResource.extend({
   resourceType: z.literal(Resources.Bundle),

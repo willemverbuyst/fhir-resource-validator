@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { Reference } from "./Elements/Reference";
 import { Resources } from "./resources";
 
 const base64BinaryRegex = /(\s*([0-9a-zA-Z+=]){4}\s*)+/;
@@ -145,6 +144,101 @@ const Signature = z
   })
   .strict();
 
+function Reference(resource: string | string[]) {
+  const regex =
+    typeof resource === "string"
+      ? new RegExp(`^${resource}`)
+      : new RegExp(`^${resource.join("|")}`);
+
+  const Reference = z
+    .object({
+      reference: z.string().regex(regex).optional(),
+      type: z.string().optional(),
+      indetifier: z.unknown().optional(),
+      display: z.string().optional(),
+    })
+    .strict();
+
+  return Reference;
+}
+
+const Narrative = z
+  .object({
+    status: z.enum(["generated", "extensions", "additional", "empty"]),
+    div: z.string(),
+  })
+  .strict();
+
+const Meta = z
+  .object({
+    versionId: z.string().optional(),
+    lastUpdated: instant.optional(),
+    source: z.string().optional(),
+    profile: z.unknown().optional(),
+    security: Coding.optional(),
+    tag: Coding.optional(),
+  })
+  .strict();
+
+const base = z
+  .object({
+    url: z.string(),
+    valueBase64Binary: z.string().regex(/(\s*([0-9a-zA-Z\\+\\=]){4}\s*)+/),
+    valueBoolean: z.boolean(),
+    valueCodeableConcept: CodeableConcept,
+    valueString: z.string(),
+    valueQuantity: Quantity.optional(),
+    valueCode: z.string(),
+  })
+  .strict()
+  .partial();
+
+type Extension = {
+  extension?: Extension[];
+};
+
+export const extension: z.ZodType<Extension> = base
+  .extend({
+    extension: z.lazy(() => extension.array()).optional(),
+  })
+  .superRefine((val, ctx) => {
+    if (!val.url) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Property url is required",
+      });
+    }
+
+    if (Object.keys(val).filter((i) => i !== "url").length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "At least one of value options or extension is required",
+      });
+    }
+
+    if (
+      Object.keys(val)
+        .filter((i) => i !== "url")
+        .includes("extension") &&
+      Object.keys(val).filter((i) => i !== "url").length > 1
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Or extension or a value option is allowed, not both",
+      });
+    }
+
+    if (
+      Object.keys(val).filter((i) => i !== "url" && i !== "extension").length >
+      1
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Only one value option is allowed",
+      });
+    }
+  });
+
 export const dataTypes = {
   base64Binary,
   date,
@@ -161,4 +255,8 @@ export const dataTypes = {
   Period,
   Quantity,
   Signature,
+  Narrative,
+  Meta,
+  extension,
+  Reference,
 };

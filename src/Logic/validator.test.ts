@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { ZodIssueCode, ZodParsedType, z } from "zod";
-import * as resourceExports from "../Resources/resources";
+import * as resourceExports from "../fhirR4/resources";
 import * as domExports from "./dom";
 import * as parseExports from "./parse";
 import { validator } from "./validator";

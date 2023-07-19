@@ -1,0 +1,19 @@
+import { z } from "zod";
+import { dataTypes } from "./dataTypes";
+
+export const Resource = z
+  .object({
+    id: z.string().optional(),
+    meta: dataTypes.Meta.optional(),
+    implicitRules: z.string().optional(),
+    language: z.string().optional(),
+  })
+  .strict();
+
+export const DomainResource = Resource.extend({
+  id: z.string().optional(),
+  text: dataTypes.Narrative.optional(),
+  contained: Resource.optional(),
+  extension: z.array(dataTypes.extension).optional(),
+  modifierExtension: z.array(dataTypes.extension).optional(),
+}).strict();

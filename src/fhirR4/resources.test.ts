@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findResourceType, getResourceType } from "./resources";
+import { findResourceType, getResourceType } from "../Logic/validator";
 
 describe("getResourceType", () => {
   it("should return the resourceType when a valid object with the resourceType property is provided", () => {

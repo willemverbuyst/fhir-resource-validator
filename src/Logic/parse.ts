@@ -1,11 +1,11 @@
-import { Bundle } from "../Resources/Bundle";
-import { Consent } from "../Resources/Consent";
-import { Encounter } from "../Resources/Encounter";
-import { Flag } from "../Resources/Flag";
-import { Organization } from "../Resources/Organization";
-import { Patient } from "../Resources/Patient";
-import { PractitionerRole } from "../Resources/PractitionerRole";
-import { Resources, ResourceType } from "../Resources/resources";
+import { Bundle } from "../fhirR4/Bundle";
+import { Consent } from "../fhirR4/Resources/Consent";
+import { Encounter } from "../fhirR4/Resources/Encounter";
+import { Flag } from "../fhirR4/Resources/Flag";
+import { Organization } from "../fhirR4/Resources/Organization";
+import { Patient } from "../fhirR4/Resources/Patient";
+import { PractitionerRole } from "../fhirR4/Resources/PractitionerRole";
+import { ResourceType, Resources } from "../fhirR4/resources";
 import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
 
 export function parseJSONInput() {

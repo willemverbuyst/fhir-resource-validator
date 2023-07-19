@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { DomainResource } from "./Elements/DomainResource";
-import { Reference } from "./Elements/Reference";
-import { dataTypes } from "./dataTypes";
-import { Resources } from "./resources";
+import { DomainResource } from "../DomainResource";
+import { dataTypes } from "../dataTypes";
+import { Resources } from "../resources";
 
 export const Patient = DomainResource.extend({
   resourceType: z.literal(Resources.Patient),
@@ -27,7 +26,7 @@ export const Patient = DomainResource.extend({
         telemcom: z.array(dataTypes.ContactPoint).optional(),
         address: dataTypes.Address.optional(),
         gender: z.enum(["male", "female", "other", "unknown"]).optional(),
-        organization: Reference(Resources.Organization).optional(),
+        organization: dataTypes.Reference(Resources.Organization).optional(),
         period: dataTypes.Period.optional(),
       }),
     )
@@ -42,18 +41,21 @@ export const Patient = DomainResource.extend({
     .optional(),
   generalPractitioner: z
     .array(
-      Reference([
+      dataTypes.Reference([
         Resources.Organization,
         Resources.Practitioner,
         Resources.PractitionerRole,
       ]),
     )
     .optional(),
-  managingOrganization: Reference(Resources.Organization).optional(),
+  managingOrganization: dataTypes.Reference(Resources.Organization).optional(),
   link: z
     .array(
       z.object({
-        other: Reference([Resources.Patient, Resources.RelatedPerson]),
+        other: dataTypes.Reference([
+          Resources.Patient,
+          Resources.RelatedPerson,
+        ]),
         type: z.enum(["replaced-by", "replaces", "refer", "seealso"]),
       }),
     )

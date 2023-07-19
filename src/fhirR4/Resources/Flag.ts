@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { DomainResource } from "./Elements/DomainResource";
-import { Reference } from "./Elements/Reference";
-import { dataTypes } from "./dataTypes";
-import { Resources } from "./resources";
+import { DomainResource } from "../DomainResource";
+import { dataTypes } from "../dataTypes";
+import { Resources } from "../resources";
 
 export const Flag = DomainResource.extend({
   resourceType: z.literal(Resources.Flag),
@@ -11,7 +10,7 @@ export const Flag = DomainResource.extend({
   category: z.array(dataTypes.CodeableConcept).optional(),
   code: dataTypes.CodeableConcept,
   period: dataTypes.Period.optional(),
-  subject: Reference([
+  subject: dataTypes.Reference([
     Resources.Patient,
     Resources.Location,
     Resources.Group,
@@ -21,14 +20,16 @@ export const Flag = DomainResource.extend({
     Resources.Medication,
     Resources.Procedure,
   ]),
-  encounter: Reference(Resources.Encounter).optional(),
-  author: Reference([
-    Resources.Device,
-    Resources.Organization,
-    Resources.Patient,
-    Resources.Practitioner,
-    Resources.PractitionerRole,
-  ]).optional(),
+  encounter: dataTypes.Reference(Resources.Encounter).optional(),
+  author: dataTypes
+    .Reference([
+      Resources.Device,
+      Resources.Organization,
+      Resources.Patient,
+      Resources.Practitioner,
+      Resources.PractitionerRole,
+    ])
+    .optional(),
 }).strict();
 
 export type Flag = z.infer<typeof Flag>;

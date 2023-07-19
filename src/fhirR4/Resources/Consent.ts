@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { DomainResource } from "./Elements/DomainResource";
-import { Reference } from "./Elements/Reference";
-import { dataTypes } from "./dataTypes";
-import { Resources } from "./resources";
+import { DomainResource } from "../DomainResource";
+import { dataTypes } from "../dataTypes";
+import { Resources } from "../resources";
 
 export const Consent = DomainResource.extend({
   resourceType: z.literal(Resources.Consent),
@@ -17,11 +16,11 @@ export const Consent = DomainResource.extend({
   ]),
   scope: dataTypes.CodeableConcept,
   category: z.array(dataTypes.CodeableConcept).min(1),
-  patient: Reference(Resources.Patient),
+  patient: dataTypes.Reference(Resources.Patient),
   dateTime: dataTypes.dateTime.optional(),
   performer: z
     .array(
-      Reference([
+      dataTypes.Reference([
         Resources.Organization,
         Resources.Patient,
         Resources.Practitioner,
@@ -30,14 +29,16 @@ export const Consent = DomainResource.extend({
       ]),
     )
     .optional(),
-  organization: z.array(Reference(Resources.Organization)).optional(),
+  organization: z.array(dataTypes.Reference(Resources.Organization)).optional(),
   sourceAttachment: dataTypes.Attachment.optional(),
-  sourceReference: Reference([
-    Resources.Consent,
-    Resources.DocumentReference,
-    Resources.Contract,
-    Resources.QuestionnaireResponse,
-  ]).optional(),
+  sourceReference: dataTypes
+    .Reference([
+      Resources.Consent,
+      Resources.DocumentReference,
+      Resources.Contract,
+      Resources.QuestionnaireResponse,
+    ])
+    .optional(),
   policy: z
     .object({
       authority: z.string().optional(),
@@ -48,7 +49,10 @@ export const Consent = DomainResource.extend({
   verification: z
     .object({
       verified: z.boolean(),
-      verifiedWith: Reference([Resources.Patient, Resources.RelatedPerson]),
+      verifiedWith: dataTypes.Reference([
+        Resources.Patient,
+        Resources.RelatedPerson,
+      ]),
       verificationDate: dataTypes.dateTime,
     })
     .optional(),
@@ -64,7 +68,7 @@ export const Consent = DomainResource.extend({
         }),
         z.object({
           sourceAttachment: z.undefined(),
-          sourceReference: Reference(Resources.Consent),
+          sourceReference: dataTypes.Reference(Resources.Consent),
         }),
         z.object({
           sourceAttachment: z.undefined(),

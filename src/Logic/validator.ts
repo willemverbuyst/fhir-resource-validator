@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { findResourceType } from "../Resources/resources";
+import { ResourceType, Resources } from "../fhirR4/resources";
 import {
   cleanUpDisplay,
   createErrorMessage,
@@ -7,6 +7,29 @@ import {
   createSuccessMessage,
 } from "./dom";
 import { parseJSONInput, parseWithZod } from "./parse";
+
+export function getResourceType(value: unknown) {
+  if (
+    typeof value === "object" &&
+    value !== null &&
+    "resourceType" in value &&
+    typeof value.resourceType === "string"
+  ) {
+    return (value as { resourceType: string }).resourceType;
+  }
+
+  return null;
+}
+
+export function findResourceType(value: unknown) {
+  const resourceType = getResourceType(value);
+
+  if (resourceType && resourceType in Resources) {
+    return Resources[resourceType as ResourceType];
+  }
+
+  throw new Error("Unknown resource type");
+}
 
 export function validator(element: HTMLButtonElement) {
   element.addEventListener("click", () => {
