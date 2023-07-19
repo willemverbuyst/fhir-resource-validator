@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { DomainResource } from "./Elements/DomainResource";
-import { Signature } from "./Elements/Signature";
 import { dataTypes } from "./dataTypes";
 import { fhirR4Resource } from "./fhirR4Resources";
 import { Resources } from "./resources";
@@ -60,7 +59,7 @@ export const Bundle = DomainResource.extend({
       }),
     )
     .optional(),
-  signature: Signature.optional(),
+  signature: dataTypes.Signature.optional(),
 }).strict();
 
 export type Bundle = z.infer<typeof Bundle>;

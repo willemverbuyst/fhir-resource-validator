@@ -1,29 +1,26 @@
 import { z } from "zod";
-import { Address } from "./Elements/Address";
-import { CodeableConcept } from "./Elements/CodeableConcept";
-import { ContactPoint } from "./Elements/ContactPoint";
 import { DomainResource } from "./Elements/DomainResource";
-import { HumanName } from "./Elements/HumanName";
 import { Reference } from "./Elements/Reference";
+import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
 
 export const Organization = DomainResource.extend({
   resourceType: z.literal(Resources.Organization),
   identifier: z.array(z.unknown()).optional(),
   active: z.boolean().optional(),
-  type: z.array(CodeableConcept).optional(),
+  type: z.array(dataTypes.CodeableConcept).optional(),
   name: z.string().optional(),
   alias: z.array(z.string()).optional(),
-  telecom: z.array(ContactPoint).optional(),
-  address: z.array(Address).optional(),
+  telecom: z.array(dataTypes.ContactPoint).optional(),
+  address: z.array(dataTypes.Address).optional(),
   partOf: Reference(Resources.Organization).optional(),
   contact: z
     .array(
       z.object({
-        purpose: CodeableConcept.optional(),
-        name: HumanName.optional(),
-        telecom: z.array(ContactPoint).optional(),
-        address: Address.optional(),
+        purpose: dataTypes.CodeableConcept.optional(),
+        name: dataTypes.HumanName.optional(),
+        telecom: z.array(dataTypes.ContactPoint).optional(),
+        address: dataTypes.Address.optional(),
       }),
     )
     .optional(),

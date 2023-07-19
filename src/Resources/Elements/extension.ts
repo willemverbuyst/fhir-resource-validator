@@ -1,15 +1,14 @@
 import { z } from "zod";
-import { CodeableConcept } from "./CodeableConcept";
-import { Quantity } from "./Quantity";
+import { dataTypes } from "../dataTypes";
 
 const base = z
   .object({
     url: z.string(),
     valueBase64Binary: z.string().regex(/(\s*([0-9a-zA-Z\\+\\=]){4}\s*)+/),
     valueBoolean: z.boolean(),
-    valueCodeableConcept: CodeableConcept,
+    valueCodeableConcept: dataTypes.CodeableConcept,
     valueString: z.string(),
-    valueQuantity: Quantity.optional(),
+    valueQuantity: dataTypes.Quantity.optional(),
     valueCode: z.string(),
   })
   .strict()

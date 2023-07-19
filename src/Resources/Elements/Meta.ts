@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { dataTypes } from "../dataTypes";
-import { Coding } from "./Coding";
 
 export const Meta = z
   .object({
@@ -8,7 +7,7 @@ export const Meta = z
     lastUpdated: dataTypes.instant.optional(),
     source: z.string().optional(),
     profile: z.unknown().optional(),
-    security: Coding.optional(),
-    tag: Coding.optional(),
+    security: dataTypes.Coding.optional(),
+    tag: dataTypes.Coding.optional(),
   })
   .strict();

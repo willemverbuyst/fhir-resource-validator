@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { CodeableConcept } from "./Elements/CodeableConcept";
-import { ContactPoint } from "./Elements/ContactPoint";
 import { DomainResource } from "./Elements/DomainResource";
-import { Period } from "./Elements/Period";
 import { Reference } from "./Elements/Reference";
 import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
@@ -11,14 +8,14 @@ export const PractitionerRole = DomainResource.extend({
   resourceType: z.literal(Resources.PractitionerRole),
   identifier: z.array(z.unknown()).optional(),
   active: z.boolean().optional(),
-  period: Period.optional(),
+  period: dataTypes.Period.optional(),
   practitioner: Reference(Resources.Practitioner).optional(),
   organization: Reference(Resources.Organization).optional(),
-  code: z.array(CodeableConcept).optional(),
-  specialty: z.array(CodeableConcept).optional(),
+  code: z.array(dataTypes.CodeableConcept).optional(),
+  specialty: z.array(dataTypes.CodeableConcept).optional(),
   location: z.array(Reference(Resources.Location)).optional(),
   healthcareService: z.array(Reference(Resources.HealthcareService)).optional(),
-  telecom: z.array(ContactPoint).optional(),
+  telecom: z.array(dataTypes.ContactPoint).optional(),
   availableTime: z
     .array(
       z.object({
@@ -35,7 +32,7 @@ export const PractitionerRole = DomainResource.extend({
     .array(
       z.object({
         description: z.string(),
-        during: Period.optional(),
+        during: dataTypes.Period.optional(),
       }),
     )
     .optional(),

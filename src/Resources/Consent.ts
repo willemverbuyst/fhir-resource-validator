@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { Attachment } from "./Elements/Attachment";
-import { CodeableConcept } from "./Elements/CodeableConcept";
 import { DomainResource } from "./Elements/DomainResource";
 import { Reference } from "./Elements/Reference";
 import { dataTypes } from "./dataTypes";
@@ -17,8 +15,8 @@ export const Consent = DomainResource.extend({
     "inactive",
     "entered-in-error",
   ]),
-  scope: CodeableConcept,
-  category: z.array(CodeableConcept).min(1),
+  scope: dataTypes.CodeableConcept,
+  category: z.array(dataTypes.CodeableConcept).min(1),
   patient: Reference(Resources.Patient),
   dateTime: dataTypes.dateTime.optional(),
   performer: z
@@ -33,7 +31,7 @@ export const Consent = DomainResource.extend({
     )
     .optional(),
   organization: z.array(Reference(Resources.Organization)).optional(),
-  sourceAttachment: Attachment.optional(),
+  sourceAttachment: dataTypes.Attachment.optional(),
   sourceReference: Reference([
     Resources.Consent,
     Resources.DocumentReference,
@@ -46,7 +44,7 @@ export const Consent = DomainResource.extend({
       uri: z.string().optional(),
     })
     .optional(),
-  policyRule: CodeableConcept.optional(),
+  policyRule: dataTypes.CodeableConcept.optional(),
   verification: z
     .object({
       verified: z.boolean(),
@@ -61,7 +59,7 @@ export const Consent = DomainResource.extend({
     z.union(
       [
         z.object({
-          sourceAttachment: Attachment,
+          sourceAttachment: dataTypes.Attachment,
           sourceReference: z.undefined(),
         }),
         z.object({
