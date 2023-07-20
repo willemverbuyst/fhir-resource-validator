@@ -87,3 +87,27 @@ export function createSuccessMessage() {
 
   displayMessage(card);
 }
+
+export function buildList() {
+  const divForList = document.getElementById("list");
+
+  const list = document.createElement("ul");
+
+  const validatableResources = [
+    "Consent",
+    "Flag",
+    "Organization",
+    "Patient",
+    "Practitioner",
+    "PractitionerRole",
+  ];
+
+  for (const resource of validatableResources) {
+    const listItem = document.createElement("li");
+    const listItemText = document.createTextNode(String(resource));
+    listItem.appendChild(listItemText);
+    list.appendChild(listItem);
+  }
+
+  divForList?.appendChild(list);
+}

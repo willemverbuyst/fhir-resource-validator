@@ -11,14 +11,14 @@ export const Resources = {
   HealthcareService: "HealthcareService",
   Location: "Location",
   Medication: "Medication",
+  Organization: "Organization",
   Patient: "Patient",
   PlanDefinition: "PlanDefinition",
   Practitioner: "Practitioner",
   PractitionerRole: "PractitionerRole",
   Procedure: "Procedure",
-  QuestionnaireResponse: "QuestionnaireResponse",
-  Organization: "Organization",
   RelatedPerson: "RelatedPerson",
+  QuestionnaireResponse: "QuestionnaireResponse",
 } as const;
 
 export type ResourceType = keyof typeof Resources;
