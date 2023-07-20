@@ -4,6 +4,7 @@ import { Encounter } from "../fhirR4/Resources/Encounter";
 import { Flag } from "../fhirR4/Resources/Flag";
 import { Organization } from "../fhirR4/Resources/Organization";
 import { Patient } from "../fhirR4/Resources/Patient";
+import { Practitioner } from "../fhirR4/Resources/Practitioner";
 import { PractitionerRole } from "../fhirR4/Resources/PractitionerRole";
 import { ResourceType, Resources } from "../fhirR4/resources";
 import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
@@ -46,6 +47,9 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
       break;
     case Resources.Patient:
       Patient.parse(value);
+      break;
+    case Resources.Practitioner:
+      Practitioner.parse(value);
       break;
     case Resources.PractitionerRole:
       PractitionerRole.parse(value);

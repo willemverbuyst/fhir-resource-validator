@@ -11,7 +11,6 @@ export const Resource = z
   .strict();
 
 export const DomainResource = Resource.extend({
-  id: z.string().optional(),
   text: dataTypes.Narrative.optional(),
   contained: Resource.optional(),
   extension: z.array(dataTypes.extension).optional(),

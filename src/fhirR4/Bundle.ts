@@ -5,6 +5,7 @@ import { Encounter } from "./Resources/Encounter";
 import { Flag } from "./Resources/Flag";
 import { Organization } from "./Resources/Organization";
 import { Patient } from "./Resources/Patient";
+import { Practitioner } from "./Resources/Practitioner";
 import { PractitionerRole } from "./Resources/PractitionerRole";
 import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
@@ -15,6 +16,7 @@ const fhirR4Resource = z.union([
   Flag,
   Organization,
   Patient,
+  Practitioner,
   PractitionerRole,
 ]);
 
