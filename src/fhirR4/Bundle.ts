@@ -24,7 +24,7 @@ const fhirR4Resource = z.union([
 
 export const Bundle = DomainResource.extend({
   resourceType: z.literal(Resources.Bundle),
-  identifier: z.unknown().optional(),
+  identifier: dataTypes.identifier.optional(),
   type: z.enum([
     "document",
     "message",

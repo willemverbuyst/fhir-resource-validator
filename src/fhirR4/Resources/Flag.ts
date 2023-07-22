@@ -5,7 +5,7 @@ import { Resources } from "../resources";
 
 export const Flag = DomainResource.extend({
   resourceType: z.literal(Resources.Flag),
-  identifier: z.array(z.unknown()).optional(),
+  identifier: z.array(dataTypes.identifier).optional(),
   status: z.enum(["active", "inactive", "entered-in-error"]),
   category: z.array(dataTypes.CodeableConcept).optional(),
   code: dataTypes.CodeableConcept,

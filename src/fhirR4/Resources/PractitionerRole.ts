@@ -5,7 +5,7 @@ import { Resources } from "../resources";
 
 export const PractitionerRole = DomainResource.extend({
   resourceType: z.literal(Resources.PractitionerRole),
-  identifier: z.array(z.unknown()).optional(),
+  identifier: z.array(dataTypes.identifier).optional(),
   active: z.boolean().optional(),
   period: dataTypes.Period.optional(),
   practitioner: dataTypes.Reference(Resources.Practitioner).optional(),

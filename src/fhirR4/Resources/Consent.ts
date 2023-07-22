@@ -5,7 +5,7 @@ import { Resources } from "../resources";
 
 export const Consent = DomainResource.extend({
   resourceType: z.literal(Resources.Consent),
-  identifier: z.array(z.unknown()).optional(),
+  identifier: z.array(dataTypes.identifier).optional(),
   status: z.enum([
     "draft",
     "proposed",

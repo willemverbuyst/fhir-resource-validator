@@ -180,6 +180,17 @@ const Meta = z
   })
   .strict();
 
+const identifier = z
+  .object({
+    use: z.enum(["usual", "official", "temp", "secondary", "old"]).optional(),
+    type: CodeableConcept.optional(),
+    system: z.string().optional(),
+    value: z.string().optional(),
+    period: Period.optional(),
+    assigner: Reference(Resources.Organization).optional(),
+  })
+  .strict();
+
 const base = z
   .object({
     url: z.string(),
@@ -245,6 +256,7 @@ export const dataTypes = {
   dateTime,
   decimal,
   instant,
+  identifier,
   time,
   Address,
   Attachment,

@@ -5,7 +5,7 @@ import { Resources } from "../resources";
 
 export const Organization = DomainResource.extend({
   resourceType: z.literal(Resources.Organization),
-  identifier: z.array(z.unknown()).optional(),
+  identifier: z.array(dataTypes.identifier).optional(),
   active: z.boolean().optional(),
   type: z.array(dataTypes.CodeableConcept).optional(),
   name: z.string().optional(),

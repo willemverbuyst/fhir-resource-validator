@@ -5,7 +5,7 @@ import { Resources } from "../resources";
 
 export const Patient = DomainResource.extend({
   resourceType: z.literal(Resources.Patient),
-  identifier: z.array(z.unknown()).optional(),
+  identifier: z.array(dataTypes.identifier).optional(),
   active: z.boolean().optional(),
   name: z.array(dataTypes.HumanName).optional(),
   telecom: z.array(dataTypes.ContactPoint).optional(),
