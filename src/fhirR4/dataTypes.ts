@@ -155,8 +155,8 @@ function Reference(resource: string | string[]) {
 
   const Reference = z
     .object({
-      reference: z.string().regex(regex).optional(),
-      type: z.string().optional(),
+      reference: z.string().optional(),
+      type: z.string().regex(regex).optional(),
       indetifier: z.unknown().optional(),
       display: z.string().optional(),
     })

@@ -13,6 +13,7 @@ export const Resources = {
   Medication: "Medication",
   Organization: "Organization",
   Patient: "Patient",
+  Person: "Person",
   PlanDefinition: "PlanDefinition",
   Practitioner: "Practitioner",
   PractitionerRole: "PractitionerRole",

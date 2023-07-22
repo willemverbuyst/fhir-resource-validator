@@ -98,6 +98,7 @@ export function buildList() {
     "Flag",
     "Organization",
     "Patient",
+    "Person",
     "Practitioner",
     "PractitionerRole",
     "RelatedPerson",
