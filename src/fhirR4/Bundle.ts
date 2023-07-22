@@ -7,6 +7,7 @@ import { Organization } from "./Resources/Organization";
 import { Patient } from "./Resources/Patient";
 import { Practitioner } from "./Resources/Practitioner";
 import { PractitionerRole } from "./Resources/PractitionerRole";
+import { RelatedPerson } from "./Resources/RelatedPerson";
 import { dataTypes } from "./dataTypes";
 import { Resources } from "./resources";
 
@@ -18,6 +19,7 @@ const fhirR4Resource = z.union([
   Patient,
   Practitioner,
   PractitionerRole,
+  RelatedPerson,
 ]);
 
 export const Bundle = DomainResource.extend({

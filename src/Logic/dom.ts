@@ -100,6 +100,7 @@ export function buildList() {
     "Patient",
     "Practitioner",
     "PractitionerRole",
+    "RelatedPerson",
   ];
 
   for (const resource of validatableResources) {

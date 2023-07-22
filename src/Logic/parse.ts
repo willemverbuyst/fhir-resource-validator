@@ -6,6 +6,7 @@ import { Organization } from "../fhirR4/Resources/Organization";
 import { Patient } from "../fhirR4/Resources/Patient";
 import { Practitioner } from "../fhirR4/Resources/Practitioner";
 import { PractitionerRole } from "../fhirR4/Resources/PractitionerRole";
+import { RelatedPerson } from "../fhirR4/Resources/RelatedPerson";
 import { ResourceType, Resources } from "../fhirR4/resources";
 import { cleanUpDisplay, createGenericErrorMessage } from "./dom";
 
@@ -53,6 +54,9 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
       break;
     case Resources.PractitionerRole:
       PractitionerRole.parse(value);
+      break;
+    case Resources.RelatedPerson:
+      RelatedPerson.parse(value);
       break;
     default:
       throw new Error("Unhandled resource");
