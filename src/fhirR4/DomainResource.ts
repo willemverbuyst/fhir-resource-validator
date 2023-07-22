@@ -3,7 +3,7 @@ import { dataTypes } from "./dataTypes";
 
 export const Resource = z
   .object({
-    id: z.string().optional(),
+    id: dataTypes.id.optional(),
     meta: dataTypes.Meta.optional(),
     implicitRules: z.string().optional(),
     language: z.string().optional(),
