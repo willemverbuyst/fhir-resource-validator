@@ -20,6 +20,7 @@ export const Resources = {
   Procedure: "Procedure",
   RelatedPerson: "RelatedPerson",
   QuestionnaireResponse: "QuestionnaireResponse",
+  Substance: "Substance",
 } as const;
 
 export type ResourceType = keyof typeof Resources;

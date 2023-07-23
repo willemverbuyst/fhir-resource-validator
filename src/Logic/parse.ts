@@ -2,6 +2,7 @@ import { Bundle } from "../fhirR4/Resources/Bundle";
 import { Consent } from "../fhirR4/Resources/Consent";
 import { Encounter } from "../fhirR4/Resources/Encounter";
 import { Flag } from "../fhirR4/Resources/Flag";
+import { Group } from "../fhirR4/Resources/Group";
 import { Organization } from "../fhirR4/Resources/Organization";
 import { Patient } from "../fhirR4/Resources/Patient";
 import { Person } from "../fhirR4/Resources/Person";
@@ -43,6 +44,9 @@ export function parseWithZod(value: unknown, resourceType: ResourceType) {
       break;
     case Resources.Flag:
       Flag.parse(value);
+      break;
+    case Resources.Group:
+      Group.parse(value);
       break;
     case Resources.Organization:
       Organization.parse(value);

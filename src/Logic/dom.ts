@@ -96,6 +96,7 @@ export function buildList() {
   const validatableResources = [
     "Consent",
     "Flag",
+    "Group",
     "Organization",
     "Patient",
     "Person",

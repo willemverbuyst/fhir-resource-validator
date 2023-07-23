@@ -121,6 +121,8 @@ const Quantity = z
   })
   .strict();
 
+const SimpleQuantity = Quantity.omit({ comparator: true });
+
 const Signature = z
   .object({
     type: z.array(Coding),
@@ -147,16 +149,17 @@ const Signature = z
   })
   .strict();
 
-function Reference(resource: string | string[]) {
-  const regex =
-    typeof resource === "string"
-      ? new RegExp(`^${resource}`)
-      : new RegExp(`^${resource.join("|")}`);
+function Reference(resource?: string | string[]) {
+  const regex = !resource
+    ? null
+    : typeof resource === "string"
+    ? new RegExp(`^${resource}`)
+    : new RegExp(`^${resource.join("|")}`);
 
   const Reference = z
     .object({
       reference: z.string().optional(),
-      type: z.string().regex(regex).optional(),
+      type: regex ? z.string().regex(regex).optional() : z.string().optional(),
       indetifier: z.unknown().optional(),
       display: z.string().optional(),
     })
@@ -201,8 +204,9 @@ const base = z
     valueBoolean: z.boolean(),
     valueCodeableConcept: CodeableConcept,
     valueString: z.string(),
-    valueQuantity: Quantity.optional(),
+    valueQuantity: Quantity,
     valueCode: z.string(),
+    valueReference: Reference(),
   })
   .strict()
   .partial();
@@ -211,7 +215,12 @@ type Extension = {
   extension?: Extension[];
 };
 
-export const extension: z.ZodType<Extension> = base
+const Range = z.object({
+  low: SimpleQuantity.optional(),
+  high: SimpleQuantity.optional(),
+});
+
+const extension: z.ZodType<Extension> = base
   .extend({
     extension: z.lazy(() => extension.array()).optional(),
   })
@@ -273,6 +282,8 @@ export const dataTypes = {
   Signature,
   Narrative,
   Meta,
+  Range,
+  SimpleQuantity,
   extension,
   Reference,
 };
