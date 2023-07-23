@@ -1,15 +1,15 @@
 import { z } from "zod";
-import { DomainResource } from "./DomainResource";
-import { Consent } from "./Resources/Consent";
-import { Encounter } from "./Resources/Encounter";
-import { Flag } from "./Resources/Flag";
-import { Organization } from "./Resources/Organization";
-import { Patient } from "./Resources/Patient";
-import { Practitioner } from "./Resources/Practitioner";
-import { PractitionerRole } from "./Resources/PractitionerRole";
-import { RelatedPerson } from "./Resources/RelatedPerson";
-import { dataTypes } from "./dataTypes";
-import { Resources } from "./resources";
+import { DomainResource } from "../DomainResource";
+import { dataTypes } from "../dataTypes";
+import { Resources } from "../resources";
+import { Consent } from "./Consent";
+import { Encounter } from "./Encounter";
+import { Flag } from "./Flag";
+import { Organization } from "./Organization";
+import { Patient } from "./Patient";
+import { Practitioner } from "./Practitioner";
+import { PractitionerRole } from "./PractitionerRole";
+import { RelatedPerson } from "./RelatedPerson";
 
 const fhirR4Resource = z.union([
   Consent,

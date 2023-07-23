@@ -1,4 +1,4 @@
-import { Bundle } from "../fhirR4/Bundle";
+import { Bundle } from "../fhirR4/Resources/Bundle";
 import { Consent } from "../fhirR4/Resources/Consent";
 import { Encounter } from "../fhirR4/Resources/Encounter";
 import { Flag } from "../fhirR4/Resources/Flag";
