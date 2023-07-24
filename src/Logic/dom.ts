@@ -97,6 +97,7 @@ export function buildList() {
     "Consent",
     "Flag",
     "Group",
+    "Location",
     "Organization",
     "Patient",
     "Person",

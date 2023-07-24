@@ -5,8 +5,11 @@ import { Resources } from "../resources";
 import { Consent } from "./Consent";
 import { Encounter } from "./Encounter";
 import { Flag } from "./Flag";
+import { Group } from "./Group";
+import { Location } from "./Location";
 import { Organization } from "./Organization";
 import { Patient } from "./Patient";
+import { Person } from "./Person";
 import { Practitioner } from "./Practitioner";
 import { PractitionerRole } from "./PractitionerRole";
 import { RelatedPerson } from "./RelatedPerson";
@@ -15,8 +18,11 @@ const fhirR4Resource = z.union([
   Consent,
   Encounter,
   Flag,
+  Group,
+  Location,
   Organization,
   Patient,
+  Person,
   Practitioner,
   PractitionerRole,
   RelatedPerson,
