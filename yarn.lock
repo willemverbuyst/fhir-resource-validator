@@ -1796,10 +1796,10 @@ graphemer@^1.4.0:
   resolved "https://registry.yarnpkg.com/graphemer/-/graphemer-1.4.0.tgz#fb2f1d55e0e3a1849aeffc90c4fa0dd53a0e66c6"
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
 
-happy-dom@^10.11.2:
-  version "10.11.2"
-  resolved "https://registry.yarnpkg.com/happy-dom/-/happy-dom-10.11.2.tgz#6a299c8943f68f67859919b35ea49818573bdfbe"
-  integrity sha512-rzgmLjLkhyaOdFEyU8CWXzbgyCyM7wJHLqhaoeEVSTyur1fjcUaiNTHx+D4CPaLvx16tGy+SBPd9TVnP/kzL3w==
+happy-dom@^12.4.0:
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/happy-dom/-/happy-dom-12.4.0.tgz#7da7209e9655bbd4642d0b31b0d753846550086d"
+  integrity sha512-I3MUV+70GG4UfPuPLATndGwSZcB1q0EdJtwFTiC5nCNLGQY5tPdloyIJdq94lgVjH537gLFmo8zJgDvqvP/FDw==
   dependencies:
     css.escape "^1.5.1"
     entities "^4.5.0"
