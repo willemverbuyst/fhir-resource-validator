@@ -153,8 +153,8 @@ function Reference(resource?: string | string[]) {
   const regex = !resource
     ? null
     : typeof resource === "string"
-    ? new RegExp(`^${resource}`)
-    : new RegExp(`^${resource.join("|")}`);
+      ? new RegExp(`^${resource}`)
+      : new RegExp(`^${resource.join("|")}`);
 
   const Reference = z
     .object({

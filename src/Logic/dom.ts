@@ -9,8 +9,8 @@ export function createCard(
     type === "ERROR"
       ? "error-card"
       : type === "WARNING"
-      ? "warning-card"
-      : "success-card";
+        ? "warning-card"
+        : "success-card";
 
   const title = document.createElement("h4");
 
